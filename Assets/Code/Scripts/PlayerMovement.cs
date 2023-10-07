@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float MoveSpeed = 5f;    //For movement speed
-
-    public float rotationSpeed = 5f;    //For facing the Cursor
+    public float MoveSpeed = 5f;    //Speed for movement speed
+    public float rotationSpeed = 5f;    //Spped for facing the Cursor
     Vector3 mousePos;
     Vector3 movement;
     private Quaternion lookRotation;
+    
 
     void Start()
     {
@@ -28,10 +28,7 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         transform.Translate(movement * MoveSpeed * Time.deltaTime,Space.World);  //Copy the vector3 movement to object
-        if (Input.GetMouseButtonDown(1))
-        {
-            //shoot();
-        }
+
         FaceCursor();
     }
     
