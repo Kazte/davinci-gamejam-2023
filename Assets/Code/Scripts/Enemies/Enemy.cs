@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Enemy : MonoBehaviour
@@ -20,6 +21,16 @@ public class Enemy : MonoBehaviour
     public float DetectionRadius = 4f;
     public float UndetectionRadius = 10f;
 
+    [Header("Garbage Drop")]
+    public float DropCooldown = 5f;
+
+    [Range(0f, 1f)] public float DropChance = 1f;
+    public GameObject GarbagePrefab;
+    [HideInInspector] public bool CanDrop;
+
+    private float timerDropCooldown;
+
+
     private StateMachine stateMachine = new StateMachine();
 
     private void Awake()
@@ -32,6 +43,8 @@ public class Enemy : MonoBehaviour
         stateMachine.Add(new RunState(this, "run"));
 
         stateMachine.ChangeToState("wander");
+
+        timerDropCooldown = DropCooldown;
     }
 
     [Header("Temp")]
@@ -43,6 +56,20 @@ public class Enemy : MonoBehaviour
     private void Update()
     {
         stateMachine.Update();
+
+        if (CanDrop)
+        {
+            if (timerDropCooldown <= 0)
+            {
+                Instantiate(GarbagePrefab, transform.position, Quaternion.identity);
+                GameManager.Instance.AddGarbage();
+                timerDropCooldown = DropCooldown;
+            }
+            else
+            {
+                timerDropCooldown -= Time.deltaTime;
+            }
+        }
     }
 
     private void FixedUpdate()

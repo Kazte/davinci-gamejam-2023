@@ -6,6 +6,13 @@ public class RunState : State
     {
     }
 
+    public override void Enter()
+    {
+        base.Enter();
+
+        Enemy.CanDrop = false;
+    }
+
     public override void Update()
     {
         base.Update();

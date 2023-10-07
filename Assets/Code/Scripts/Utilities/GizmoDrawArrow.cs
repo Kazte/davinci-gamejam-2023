@@ -2,8 +2,8 @@
 
 public static class GizmoDrawArrow
 {
-    public static void ForGizmo(Vector3 pos, Vector3 direction, float arrowHeadLength = 0.25f,
-        float arrowHeadAngle = 20.0f)
+    public static void ForGizmo(Vector3 pos, Vector3 direction, float arrowHeadLength = 1.5f,
+        float arrowHeadAngle = 15f)
     {
         Gizmos.DrawRay(pos, direction);
 

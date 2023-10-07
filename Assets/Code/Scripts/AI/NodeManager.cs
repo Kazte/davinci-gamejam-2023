@@ -1,30 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Utilities;
-using Random = UnityEngine.Random;
 
-public class NodeManager : MonoBehaviour
+public class NodeManager : Singleton<NodeManager>
 {
-    #region Singleton
-
-    public static NodeManager Instance { get; private set; }
-
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-        }
-    }
-
-    #endregion
-
     private List<NodeAI> nodes = new List<NodeAI>();
 
     [ContextMenu("Validate")]

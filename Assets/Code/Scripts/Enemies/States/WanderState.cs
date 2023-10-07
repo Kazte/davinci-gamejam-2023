@@ -13,6 +13,7 @@ public class WanderState : State
         base.Enter();
 
         currentNode = NodeManager.Instance.GetClosestNode(Enemy.transform.position);
+        Enemy.CanDrop = true;
     }
 
     public override void Update()
