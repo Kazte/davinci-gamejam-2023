@@ -19,6 +19,9 @@ public class GameManager : Singleton<GameManager>
 
     private float timer;
 
+    private bool blackPowerUp;
+    private bool bluePowerUp;
+
     private void Start()
     {
         timer = 0f;
@@ -79,4 +82,18 @@ public class GameManager : Singleton<GameManager>
     {
         GameOverContainer.SetActive(true);
     }
+
+    public void SetBlackPowerUp(bool set)
+    {
+        blackPowerUp = set;
+    }
+
+    public bool GetBlackPowerUp() => blackPowerUp;
+
+    public void SetBluePowerUp(bool set)
+    {
+        bluePowerUp = set;
+    }
+
+    public bool GetBluePowerUp() => bluePowerUp;
 }

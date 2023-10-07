@@ -45,6 +45,8 @@ public class Enemy : MonoBehaviour
         stateMachine.ChangeToState("wander");
 
         timerDropCooldown = DropCooldown;
+        
+        GameManager.Instance.AddEnemy();
     }
 
     [Header("Temp")]
