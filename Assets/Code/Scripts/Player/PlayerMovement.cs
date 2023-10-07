@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        transform.Translate(movement * MoveSpeed * Time.deltaTime,Space.World);  //Copy the vector3 movement to object
+        transform.Translate(movement * (MoveSpeed * Time.deltaTime),Space.World);  //Copy the vector3 movement to object
 
         FaceCursor();
     }

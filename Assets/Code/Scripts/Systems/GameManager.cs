@@ -14,6 +14,9 @@ public class GameManager : Singleton<GameManager>
 
     private int currentEnemies;
 
+    [Header("Game over")]
+    public GameObject GameOverContainer;
+
     private float timer;
 
     private void Start()
@@ -25,6 +28,8 @@ public class GameManager : Singleton<GameManager>
 
         currentEnemies = MaxEnemies;
         HUDManager.Instance.SetEnemiesLeft(currentEnemies, MaxEnemies);
+
+        GameOverContainer.SetActive(false);
     }
 
     private void Update()
@@ -42,7 +47,7 @@ public class GameManager : Singleton<GameManager>
 
         if (currentGarbage >= MaxGarbage)
         {
-            // TODO: GAME OVER!
+            GameOverContainer.SetActive(true);
         }
     }
 
@@ -69,6 +74,9 @@ public class GameManager : Singleton<GameManager>
         currentEnemies--;
         HUDManager.Instance.SetEnemiesLeft(currentEnemies, MaxEnemies);
     }
-    
-    
+
+    public void GameOver()
+    {
+        GameOverContainer.SetActive(true);
+    }
 }

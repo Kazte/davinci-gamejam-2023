@@ -19,7 +19,7 @@ public class HUDManager : Singleton<HUDManager>
 
 
     [Header("Bottom Left Container")]
-    [Space] public List<AmmoUI> AmmoUis;
+    [Space] public List<AmmoUI> AmmoUis = new List<AmmoUI>();
 
 
     [Header("Power Up")]
@@ -76,8 +76,8 @@ public class HUDManager : Singleton<HUDManager>
     {
         if (timeLeft > 0)
         {
-            GreenPowerUpSlider.fillAmount = 1f - timeLeft / totalTime;
-            GreenPowerUpText.SetText(timeLeft.ToString());
+            GreenPowerUpSlider.fillAmount = timeLeft / totalTime;
+            GreenPowerUpText.SetText(timeLeft.ToString("0.00s"));
         }
         else
         {

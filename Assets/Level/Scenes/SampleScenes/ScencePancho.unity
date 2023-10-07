@@ -178,10 +178,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9037752722720386834, guid: 0e9eb99b8c2553e4984a39952435d4c8, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e9eb99b8c2553e4984a39952435d4c8, type: 3}
 --- !u!1 &1054262414
@@ -199,7 +195,7 @@ GameObject:
   - component: {fileID: 1054262419}
   m_Layer: 0
   m_Name: Cylinder
-  m_TagString: CartuchoObject
+  m_TagString: Ammo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -674,6 +670,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e226db44ca4671478fb805d211a806b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FirstPower: {fileID: 5994726784350435714, guid: 0e9eb99b8c2553e4984a39952435d4c8, type: 3}
-  SecondPower: {fileID: 0}
-  ThirdPower: {fileID: 0}
