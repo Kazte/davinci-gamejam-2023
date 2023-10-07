@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ammo
   - PowerUp
+  - Projectile
   layers:
   - Default
   - TransparentFX

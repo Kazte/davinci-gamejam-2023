@@ -45,7 +45,7 @@ public class Enemy : MonoBehaviour
         stateMachine.ChangeToState("wander");
 
         timerDropCooldown = DropCooldown;
-        
+
         GameManager.Instance.AddEnemy();
     }
 
@@ -99,6 +99,15 @@ public class Enemy : MonoBehaviour
         if (currentHealth <= 0)
         {
             ConvertToZombie();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Projectile"))
+        {
+            Health.Modify(-1);
+            Destroy(other.gameObject);
         }
     }
 
