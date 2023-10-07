@@ -29,24 +29,38 @@ public class RunState : State
     {
         base.FixedUpdate();
 
-        var dir = Enemy.Target.position - Enemy.transform.position;
-        dir.Normalize();
+        Enemy.Rb.velocity = Vector3.zero;
 
-        var raycastHitsLength =
-            Physics.OverlapSphereNonAlloc(Enemy.transform.position, 1f, colliders, LayerMask.GetMask("Obstacle"));
+        Enemy.Velocity += SteeringBehaviour.Flee(Enemy.transform.position,
+            Enemy.Target.position, Enemy.RunSpeed, Enemy.RotationSpeed, Enemy.Velocity);
 
-        for (int i = 0; i < raycastHitsLength; i++)
+        var collidersLength =
+            Physics.OverlapSphereNonAlloc(Enemy.transform.position, Enemy.ObstacleDetectionRadius, colliders, LayerMask.GetMask("Obstacle"));
+
+        Debug.Log(collidersLength);
+
+
+        if (collidersLength > 0)
         {
-            var col = colliders[i];
+            foreach (var collider in colliders)
+            {
+                if (!collider)
+                    continue;
 
-            var obstacleDirection = Enemy.transform.position - col.transform.position;
-            var distance = Vector3.Distance(col.transform.position, Enemy.transform.position);
-            obstacleDirection.y = 0f;
-            obstacleDirection.Normalize();
+                var go = collider.gameObject;
 
-            dir += obstacleDirection * (-1 * (3f / distance));
+                var end = go.transform.position;
+
+
+                Debug.DrawLine(Enemy.transform.position, end,
+                    Color.magenta);
+
+                Enemy.Velocity += SteeringBehaviour.Flee(Enemy.transform.position,
+                    end, Enemy.WanderSpeed * 1.5f, Enemy.RotationSpeed, Enemy.Velocity);
+            }
         }
 
-        Enemy.Rb.velocity = dir * -Enemy.RunSpeed;
+        Enemy.Velocity.y = 0f;
+        Enemy.Rb.velocity += Enemy.Velocity;
     }
 }

@@ -3,6 +3,7 @@
 public class WanderCommonState : State
 {
     private NodeAI currentNode;
+    private Collider[] colliders = new Collider[25];
 
     public WanderCommonState(Enemy enemy, string stateName) : base(enemy, stateName)
     {
@@ -30,10 +31,36 @@ public class WanderCommonState : State
     {
         base.FixedUpdate();
 
-        var dir = currentNode.transform.position - Enemy.transform.position;
-        dir.Normalize();
+        Enemy.Rb.velocity = Vector3.zero;
+
+        Enemy.Velocity += SteeringBehaviour.Seek(Enemy.transform.position, currentNode.transform.position,
+            Enemy.WanderSpeed, Enemy.RotationSpeed, Enemy.Velocity);
+
+        var collidersLength =
+            Physics.OverlapSphereNonAlloc(Enemy.transform.position, Enemy.ObstacleDetectionRadius, colliders,
+                LayerMask.GetMask("Obstacle"));
+
+        if (collidersLength > 0)
+        {
+            foreach (var collider in colliders)
+            {
+                if (!collider)
+                    continue;
+
+                var go = collider.gameObject;
+
+                var end = go.transform.position;
 
 
-        Enemy.Rb.velocity = dir * Enemy.WanderSpeed;
+                Debug.DrawLine(Enemy.transform.position, end,
+                    Color.magenta);
+
+                Enemy.Velocity += SteeringBehaviour.Flee(Enemy.transform.position,
+                    end, Enemy.WanderSpeed * 1.5f, Enemy.RotationSpeed, Enemy.Velocity);
+            }
+        }
+
+        Enemy.Velocity.y = 0f;
+        Enemy.Rb.velocity += Enemy.Velocity;
     }
 }

@@ -4,7 +4,7 @@ public class WanderState : State
 {
     private NodeAI currentNode;
 
-    
+    private Collider[] colliders = new Collider[25];
 
     public WanderState(Enemy enemy, string stateName) : base(enemy, stateName)
     {
@@ -22,7 +22,7 @@ public class WanderState : State
     {
         base.Update();
 
-        if (Vector3.Distance(Enemy.transform.position, currentNode.transform.position) <= 0.1f)
+        if (Vector3.Distance(Enemy.transform.position, currentNode.transform.position) <= 0.25f)
         {
             currentNode = NodeManager.Instance.GetRandomChildOfNode(currentNode);
         }
@@ -37,15 +37,40 @@ public class WanderState : State
     {
         base.FixedUpdate();
 
-        var dir = currentNode.transform.position - Enemy.transform.position;
-        dir.Normalize();
-
-
-       
-
         
 
+        Enemy.Rb.velocity = Vector3.zero;
 
-        Enemy.Rb.velocity = dir * Enemy.WanderSpeed;
+        Enemy.Velocity += SteeringBehaviour.Seek(Enemy.transform.position, currentNode.transform.position,
+            Enemy.WanderSpeed, Enemy.RotationSpeed, Enemy.Velocity);
+
+        var collidersLength =
+            Physics.OverlapSphereNonAlloc(Enemy.transform.position, Enemy.ObstacleDetectionRadius, colliders, LayerMask.GetMask("Obstacle"));
+
+        Debug.Log(collidersLength);
+
+
+        if (collidersLength > 0)
+        {
+            foreach (var collider in colliders)
+            {
+                if (!collider)
+                    continue;
+
+                var go = collider.gameObject;
+
+                var end = go.transform.position;
+
+
+                Debug.DrawLine(Enemy.transform.position, end,
+                    Color.magenta);
+
+                Enemy.Velocity += SteeringBehaviour.Flee(Enemy.transform.position,
+                    end, Enemy.WanderSpeed * 1.5f, Enemy.RotationSpeed, Enemy.Velocity);
+            }
+        }
+
+        Enemy.Velocity.y = 0f;
+        Enemy.Rb.velocity += Enemy.Velocity;
     }
 }

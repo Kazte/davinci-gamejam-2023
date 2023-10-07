@@ -22,6 +22,8 @@ public class Enemy : MonoBehaviour
     [Header("AI")]
     public int MaxHealth = 1;
 
+    public float RotationSpeed = 0.5f;
+    public float ObstacleDetectionRadius = 1.5f;
     public float WanderSpeed = 4f;
     public float RunSpeed = 6f;
     public float DetectionRadius = 4f;
@@ -33,6 +35,8 @@ public class Enemy : MonoBehaviour
     [Range(0f, 1f)] public float DropChance = 1f;
     public GameObject GarbagePrefab;
     public bool CanDrop;
+
+    [HideInInspector] public Vector3 Velocity;
 
     private float timerDropCooldown;
 
@@ -76,6 +80,14 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
+        if (Vector3.Distance(Target.position, transform.position) > UndetectionRadius)
+        {
+            Rb.velocity = Vector3.zero;
+            Velocity = Vector3.zero;
+            return;
+        }
+
+
         currentStateMachine.Update();
 
         if (CanDrop)
@@ -95,6 +107,13 @@ public class Enemy : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (Vector3.Distance(Target.position, transform.position) > UndetectionRadius)
+        {
+            Rb.velocity = Vector3.zero;
+            Velocity = Vector3.zero;
+            return;
+        }
+
         currentStateMachine.FixedUpdate();
     }
 
@@ -142,6 +161,7 @@ public class Enemy : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, UndetectionRadius);
         Gizmos.color = Color.white;
+        Gizmos.DrawWireSphere(transform.position, ObstacleDetectionRadius);
     }
 
     public void ChangeState(string newState)
