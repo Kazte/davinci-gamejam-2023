@@ -51,7 +51,7 @@ public class HUDManager : Singleton<HUDManager>
 
     public void SetEnemiesLeft(int enemiesLeft, int maxEnemies)
     {
-        EnemiesLeftSlider.fillAmount = enemiesLeft / maxEnemies;
+        EnemiesLeftSlider.fillAmount = enemiesLeft / (float)maxEnemies;
         EnemiesLeftText.SetText(enemiesLeft.ToString());
     }
 

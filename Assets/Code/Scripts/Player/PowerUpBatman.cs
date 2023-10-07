@@ -10,21 +10,23 @@ public class PowerUpBatman : MonoBehaviour, IPowerUp
 
     private bool isTimeRunning = false;
     private GameObject modifingCharacter;
+    private Color lastColor;
     public void ActivatePowerUp(GameObject character)
     {
+        //character.GetComponent.LIGHTOUT
         if (modifingCharacter == null)
         {
-            modifingCharacter = character;
+            modifingCharacter = GameObject.Find("Directional Light");
         }
-        //character.GetComponent.LIGHTOUT
+        lastColor = modifingCharacter.GetComponent<Light>().color;
+        modifingCharacter.GetComponent<Light>().color = Color.grey;
         isTimeRunning = true;
         currentTime = StartTime;
-
-
     }
 
     public void DeactivatePowerUp(GameObject character)
     {
+        modifingCharacter.GetComponent<Light>().color = lastColor;
         isTimeRunning = true;
         currentTime = 0;
     }
