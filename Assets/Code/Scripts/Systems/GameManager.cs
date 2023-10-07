@@ -10,7 +10,7 @@ public class GameManager : Singleton<GameManager>
     private int currentGarbage;
 
     [Header("Enemies")]
-    public int MaxEnemies = 30;
+    public int MaxEnemies;
 
     private int currentEnemies;
 
@@ -69,6 +69,7 @@ public class GameManager : Singleton<GameManager>
     public void AddEnemy()
     {
         currentEnemies++;
+        MaxEnemies++;
         HUDManager.Instance.SetEnemiesLeft(currentEnemies, MaxEnemies);
     }
 

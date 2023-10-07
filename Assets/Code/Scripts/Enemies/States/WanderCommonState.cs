@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
 
-public class WanderState : State
+public class WanderCommonState : State
 {
     private NodeAI currentNode;
 
-    
-
-    public WanderState(Enemy enemy, string stateName) : base(enemy, stateName)
+    public WanderCommonState(Enemy enemy, string stateName) : base(enemy, stateName)
     {
     }
 
@@ -15,7 +13,7 @@ public class WanderState : State
         base.Enter();
 
         currentNode = NodeManager.Instance.GetClosestNode(Enemy.transform.position);
-        Enemy.CanDrop = true;
+        Enemy.CanDrop = false;
     }
 
     public override void Update()
@@ -26,11 +24,6 @@ public class WanderState : State
         {
             currentNode = NodeManager.Instance.GetRandomChildOfNode(currentNode);
         }
-
-        if (Vector3.Distance(Enemy.transform.position, Enemy.Target.position) <= Enemy.DetectionRadius)
-        {
-            Enemy.ChangeState("run");
-        }
     }
 
     public override void FixedUpdate()
@@ -39,11 +32,6 @@ public class WanderState : State
 
         var dir = currentNode.transform.position - Enemy.transform.position;
         dir.Normalize();
-
-
-       
-
-        
 
 
         Enemy.Rb.velocity = dir * Enemy.WanderSpeed;

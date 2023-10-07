@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
     void FaceCursor()
     {
         Vector3 cursorScreenPosition = Input.mousePosition;
-        float distanceFromCamera = 10.0f;
+        float distanceFromCamera = 15.0f;
         Vector3 cursorWorldPosition = Camera.main.ScreenToWorldPoint(new Vector3(cursorScreenPosition.x, cursorScreenPosition.y, distanceFromCamera));
         Vector3 directionToCursor = cursorWorldPosition - transform.position;
 

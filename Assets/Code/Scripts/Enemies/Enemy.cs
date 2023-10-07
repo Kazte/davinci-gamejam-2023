@@ -2,6 +2,12 @@ using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
+public enum EnemyState
+{
+    Normal,
+    Converted
+}
+
 [RequireComponent(typeof(Rigidbody))]
 public class Enemy : MonoBehaviour
 {
@@ -26,12 +32,16 @@ public class Enemy : MonoBehaviour
 
     [Range(0f, 1f)] public float DropChance = 1f;
     public GameObject GarbagePrefab;
-    [HideInInspector] public bool CanDrop;
+    public bool CanDrop;
 
     private float timerDropCooldown;
 
+    private EnemyState enemyState = EnemyState.Normal;
 
+
+    private StateMachine currentStateMachine;
     private StateMachine stateMachine = new StateMachine();
+    private StateMachine stateMachineZombie = new StateMachine();
 
     private void Awake()
     {
@@ -39,13 +49,22 @@ public class Enemy : MonoBehaviour
 
         Health.Modified += HealthOnModified;
 
+        // State machine comun
         stateMachine.Add(new WanderState(this, "wander"));
         stateMachine.Add(new RunState(this, "run"));
 
         stateMachine.ChangeToState("wander");
 
+        // State machine comun
+        stateMachineZombie.Add(new WanderCommonState(this, "wander"));
+
+        stateMachineZombie.ChangeToState("wander");
+
+        currentStateMachine = stateMachine;
+
         timerDropCooldown = DropCooldown;
 
+        CanDrop = true;
         GameManager.Instance.AddEnemy();
     }
 
@@ -57,7 +76,7 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        stateMachine.Update();
+        currentStateMachine.Update();
 
         if (CanDrop)
         {
@@ -76,27 +95,30 @@ public class Enemy : MonoBehaviour
 
     private void FixedUpdate()
     {
-        stateMachine.FixedUpdate();
+        currentStateMachine.FixedUpdate();
     }
 
 
     [ContextMenu("Convert to Zombie (Good)")]
     public void ConvertToZombie()
     {
-        Debug.Log("Convert to zombie (GOOD)");
         SpriteRenderer.color = goodColor;
+        currentStateMachine = stateMachineZombie;
+        GameManager.Instance.RemoveEnemy();
+        enemyState = EnemyState.Converted;
+        CanDrop = false;
     }
 
     [ContextMenu("Convert to Normal (Bad)")]
     public void ConvertToNormal()
     {
-        Debug.Log("Convert to Normal (BAD)");
         SpriteRenderer.color = badColor;
+        currentStateMachine = stateMachine;
     }
 
     private void HealthOnModified(int currentHealth)
     {
-        if (currentHealth <= 0)
+        if (currentHealth <= 0 && enemyState == EnemyState.Normal)
         {
             ConvertToZombie();
         }
@@ -106,8 +128,10 @@ public class Enemy : MonoBehaviour
     {
         if (other.CompareTag("Projectile"))
         {
-            Health.Modify(-1);
             Destroy(other.gameObject);
+
+            if (enemyState == EnemyState.Normal)
+                Health.Modify(-1);
         }
     }
 
