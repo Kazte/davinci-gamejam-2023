@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.TryGetComponent<IPowerUp>(out var powerUp))
         {
-            powerUp.ActivatePowerUp(shootingController);
+            powerUp.ActivatePowerUp(this.gameObject);
         }
     }
 }

@@ -11,7 +11,7 @@ public class PowerUpGordura : MonoBehaviour, IPowerUp
     private float currentTime = 0f;
 
     private bool isTimeRunning = false;
-    private ShootingController shootingController;
+    private GameObject modifingCharacter;
 
     // Start is called before the first frame update
     /*void Start()
@@ -85,21 +85,21 @@ public class PowerUpGordura : MonoBehaviour, IPowerUp
     {
         ShottingController.CurrentAmmo = 5;
     }*/
-    public void ActivatePowerUp(ShootingController character)
+    public void ActivatePowerUp(GameObject character)
     {
-        if (shootingController == null)
+        if (modifingCharacter == null)
         {
-            shootingController = character;
+            modifingCharacter = character;
         }
 
-        character.SetGordura(true);
+        character.GetComponent<ShootingController>().SetGordura(true);
         isTimeRunning = true;
         currentTime = StartTime;
     }
 
-    public void DeactivatePowerUp(ShootingController character)
+    public void DeactivatePowerUp(GameObject character)
     {
-        character.SetGordura(false);
+        character.GetComponent<ShootingController>().SetGordura(false);
         isTimeRunning = false;
         currentTime = 0;
     }
@@ -117,7 +117,7 @@ public class PowerUpGordura : MonoBehaviour, IPowerUp
         {
             if (isTimeRunning)
             {
-                DeactivatePowerUp(shootingController);
+                DeactivatePowerUp(modifingCharacter);
                 HUDManager.Instance.SetPowerUpGreen(0, StartTime);
             }
         }

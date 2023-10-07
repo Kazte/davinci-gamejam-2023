@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IPowerUp
 {
-    public void ActivatePowerUp(ShootingController character);
-    public void DeactivatePowerUp(ShootingController character);
+    public void ActivatePowerUp(GameObject character);
+    public void DeactivatePowerUp(GameObject character);
 
 }
