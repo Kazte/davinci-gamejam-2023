@@ -13,9 +13,12 @@ public class HUDMenu : MonoBehaviour
     public Button CreditsButton;
     public Button CreditsBackButton;
     public Button ExitButton;
+    public Button ControlsContinueButton;
 
 
     public GameObject creditsContainer;
+
+    public GameObject controlsContainer;
 
     private void Awake()
     {
@@ -26,11 +29,25 @@ public class HUDMenu : MonoBehaviour
 
             StartCoroutine(ChangeScene(() =>
             {
-                SceneManager.LoadScene(sceneBuildIndex: 1);
+                controlsContainer.SetActive(true);
 
                 return true;
             }));
         });
+        
+        ControlsContinueButton.onClick.AddListener(() =>
+        {
+            AudioManager.Instance.Play("Button_Sound");
+            
+            StartCoroutine(ChangeScene(() =>
+            {
+                SceneManager.LoadScene(sceneBuildIndex: 1);
+            
+                return true;
+            }));
+        });
+
+        
 
         CreditsButton.onClick.AddListener(() =>
         {
