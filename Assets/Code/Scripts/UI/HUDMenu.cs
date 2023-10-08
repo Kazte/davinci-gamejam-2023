@@ -22,13 +22,13 @@ public class HUDMenu : MonoBehaviour
         CreditsButton.onClick.AddListener(() =>
         {
             creditsContainer.SetActive(true);
-            EventSystem.current.SetSelectedGameObject(CreditsBackButton.gameObject);
+            EventSystem.current.SetSelectedGameObject(null);
         });
 
         CreditsBackButton.onClick.AddListener(() =>
         {
             creditsContainer.SetActive(false);
-            EventSystem.current.SetSelectedGameObject(CreditsButton.gameObject);
+            EventSystem.current.SetSelectedGameObject(null);
         });
 
         ExitButton.onClick.AddListener(() => { Application.Quit(); });
