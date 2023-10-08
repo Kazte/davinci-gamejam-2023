@@ -107,7 +107,7 @@ public class GameManager : Singleton<GameManager>
         if (currentEnemies <= 0)
         {
             AudioManager.Instance.Play("Winner");
-
+            AudioManager.Instance.Stop("Game_Music");
             WinContainer.SetActive(true);
             IsPause = true;
         }
