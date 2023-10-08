@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
@@ -148,12 +149,16 @@ public class Enemy : MonoBehaviour
         {
             ConfusedParticleSystem.Play();
             ConfusedHat.SetActive(true);
+
+            ConfusedHat.transform.localScale = Vector3.zero;
+            ConfusedHat.transform.DOScale(Vector3.one, 0.1f);
         }
         else if (!GameManager.Instance.GetBluePowerUp())
         {
             ConfusedParticleSystem.Pause();
             ConfusedParticleSystem.Clear();
-            ConfusedHat.SetActive(false);
+
+            ConfusedHat.transform.DOScale(Vector3.zero, 0.2f).OnComplete(() => { ConfusedHat.SetActive(false); });
         }
 
         SleepParticleSystem.Pause();

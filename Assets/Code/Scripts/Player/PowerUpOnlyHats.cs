@@ -11,9 +11,15 @@ public class PowerUpOnlyHats : MonoBehaviour, IPowerUp
     private bool isTimeRunning = false;
     private GameObject modifingCharacter;
 
+    public float Cooldown = 10f;
+    private float currentCooldown;
+    private bool canTake;
+
+    public SpriteRenderer SpriteRenderer;
+    
     public bool ActivatePowerUp(GameObject character)
     {
-        if (GameManager.Instance.GetBlackPowerUp())
+        if (GameManager.Instance.GetBlackPowerUp()|| !canTake)
         {
             return false;
         }
@@ -26,7 +32,7 @@ public class PowerUpOnlyHats : MonoBehaviour, IPowerUp
         //character.GetComponent<SHADOW>.SetShadow(false);
         isTimeRunning = true;
         currentTime = StartTime;
-
+        currentCooldown = Cooldown;
         return true;
     }
 
@@ -56,6 +62,20 @@ public class PowerUpOnlyHats : MonoBehaviour, IPowerUp
                 HUDManager.Instance.SetPowerUpBlack(0, StartTime);
                 GameManager.Instance.SetBlackPowerUp(false);
             }
+        }
+        
+        if (currentCooldown > 0)
+        {
+            currentCooldown -= Time.deltaTime;
+            canTake = false;
+
+            SpriteRenderer.color = new Color(1, 1, 1, 0.25f);
+        }
+        else
+        {
+            currentCooldown = 0;
+            canTake = true;
+            SpriteRenderer.color = Color.white;
         }
     }
 }

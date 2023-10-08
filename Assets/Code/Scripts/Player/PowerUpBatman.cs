@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,9 +13,15 @@ public class PowerUpBatman : MonoBehaviour, IPowerUp
     private GameObject modifingCharacter;
     private Color lastColor;
 
+    public float Cooldown = 10f;
+    private float currentCooldown;
+    private bool canTake;
+
+    public SpriteRenderer SpriteRenderer;
+
     public bool ActivatePowerUp(GameObject character)
     {
-        if (GameManager.Instance.GetBluePowerUp())
+        if (GameManager.Instance.GetBluePowerUp() || !canTake)
         {
             return false;
         }
@@ -29,6 +36,8 @@ public class PowerUpBatman : MonoBehaviour, IPowerUp
         modifingCharacter.GetComponent<Light>().color = Color.grey;
         isTimeRunning = true;
         currentTime = StartTime;
+
+        currentCooldown = Cooldown;
 
         return true;
     }
@@ -60,6 +69,20 @@ public class PowerUpBatman : MonoBehaviour, IPowerUp
                 HUDManager.Instance.SetPowerUpBlue(0, StartTime);
                 GameManager.Instance.SetBluePowerUp(false);
             }
+        }
+
+        if (currentCooldown > 0)
+        {
+            currentCooldown -= Time.deltaTime;
+            canTake = false;
+
+            SpriteRenderer.color = new Color(1, 1, 1, 0.25f);
+        }
+        else
+        {
+            currentCooldown = 0;
+            canTake = true;
+            SpriteRenderer.color = Color.white;
         }
     }
 }
