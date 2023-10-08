@@ -35,6 +35,8 @@ public class Enemy : MonoBehaviour
     [Header("VFX")]
     public ParticleSystem sleepParticleSystem;
 
+    public ParticleSystem confusedParticleSystem;
+
 
     [Header("Garbage Drop")]
     public float DropCooldown = 5f;
@@ -82,6 +84,9 @@ public class Enemy : MonoBehaviour
 
         sleepParticleSystem.Pause();
         sleepParticleSystem.Clear();
+
+        confusedParticleSystem.Pause();
+        confusedParticleSystem.Clear();
     }
 
     [Header("Temp")]
@@ -136,8 +141,19 @@ public class Enemy : MonoBehaviour
             return;
         }
 
+        if (GameManager.Instance.GetBlackPowerUp() && enemyState == EnemyState.Normal)
+        {
+            confusedParticleSystem.Play();
+        }
+        else if (!GameManager.Instance.GetBluePowerUp())
+        {
+            confusedParticleSystem.Pause();
+            confusedParticleSystem.Clear();
+        }
+
         sleepParticleSystem.Pause();
         sleepParticleSystem.Clear();
+
 
         Animator.speed = 1;
         currentStateMachine.FixedUpdate();

@@ -13,7 +13,7 @@ public class PowerUpOnlyHats : MonoBehaviour, IPowerUp
 
     public bool ActivatePowerUp(GameObject character)
     {
-        if (GameManager.Instance.GetBluePowerUp())
+        if (GameManager.Instance.GetBlackPowerUp())
         {
             return false;
         }

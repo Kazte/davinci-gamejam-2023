@@ -22,6 +22,7 @@ public class GameManager : Singleton<GameManager>
 
     private float timer;
 
+    private bool greenPowerUp;
     private bool blackPowerUp;
     private bool bluePowerUp;
 
@@ -51,10 +52,11 @@ public class GameManager : Singleton<GameManager>
         currentGarbage++;
 
         HUDManager.Instance.SetGarbageSlider(currentGarbage / (float)MaxGarbage);
-        if (currentGarbage>=MaxGarbage-(MaxGarbage*20/100))
+        if (currentGarbage >= MaxGarbage - (MaxGarbage * 20 / 100))
         {
             AudioManager.Instance.Play("Alert_Loser");
         }
+
         if (currentGarbage >= MaxGarbage)
         {
             AudioManager.Instance.Play("Loser");
@@ -97,6 +99,13 @@ public class GameManager : Singleton<GameManager>
     {
         GameOverContainer.SetActive(true);
     }
+
+    public void SetGreenPowerUp(bool set)
+    {
+        greenPowerUp = set;
+    }
+
+    public bool GetGreenPowerUp() => greenPowerUp;
 
     public void SetBlackPowerUp(bool set)
     {
