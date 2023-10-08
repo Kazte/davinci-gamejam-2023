@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
     public SpriteRenderer SpriteRenderer;
     public Animator Animator;
     public Rigidbody Rb;
+    public Transform Body;
 
     [HideInInspector] public Health Health;
 
@@ -85,6 +86,14 @@ public class Enemy : MonoBehaviour
     {
         currentStateMachine.Update();
 
+
+        // Body.rotation = Quaternion.LookRotation(new Vector3(0f, 0f, Velocity.z));
+        Vector3 direction = -Velocity;
+
+        // Ensure the object doesn't roll by setting its up direction to the world up
+        Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
+
+        Body.rotation = Quaternion.Slerp(Body.rotation, rotation, 25f * Time.deltaTime);
 
         var distance = Vector3.Distance(Target.position, transform.position);
         if (CanDrop && distance < GarbageRadius && !GameManager.Instance.GetBluePowerUp())

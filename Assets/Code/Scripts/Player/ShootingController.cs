@@ -24,7 +24,8 @@ public class ShootingController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && (Time.time - lastShootTime) >= ShootCooldown && (currentAmmo > 0 || gorduraActivate))
+        if (Input.GetMouseButtonDown(0) && (Time.time - lastShootTime) >= ShootCooldown &&
+            (currentAmmo > 0 || gorduraActivate))
         {
             Shooting();
             lastShootTime = Time.time;
@@ -50,7 +51,7 @@ public class ShootingController : MonoBehaviour
         {
             ModifyAmmo(1);
             Destroy(other.gameObject); //Destroy CartuchoObject
-            
+
             GameManager.Instance.RemoveGarbage();
         }
     }
