@@ -33,9 +33,10 @@ public class Enemy : MonoBehaviour
     public float UndetectionRadius = 10f;
 
     [Header("VFX")]
-    public ParticleSystem sleepParticleSystem;
+    public ParticleSystem SleepParticleSystem;
 
-    public ParticleSystem confusedParticleSystem;
+    public ParticleSystem ConfusedParticleSystem;
+    public GameObject ConfusedHat;
 
 
     [Header("Garbage Drop")]
@@ -73,8 +74,10 @@ public class Enemy : MonoBehaviour
 
         // State machine bueno :)
         stateMachineZombie.Add(new WanderCommonState(this, "wander"));
+    }
 
-
+    private void Start()
+    {
         currentStateMachine = stateMachine;
 
         timerDropCooldown = DropCooldown;
@@ -82,11 +85,11 @@ public class Enemy : MonoBehaviour
         // CanDrop = true;
         GameManager.Instance.AddEnemy();
 
-        sleepParticleSystem.Pause();
-        sleepParticleSystem.Clear();
+        SleepParticleSystem.Pause();
+        SleepParticleSystem.Clear();
 
-        confusedParticleSystem.Pause();
-        confusedParticleSystem.Clear();
+        ConfusedParticleSystem.Pause();
+        ConfusedParticleSystem.Clear();
     }
 
     [Header("Temp")]
@@ -136,23 +139,25 @@ public class Enemy : MonoBehaviour
             Rb.velocity = Vector3.zero;
             Velocity = Vector3.zero;
             Animator.speed = 0;
-            sleepParticleSystem.Play();
+            SleepParticleSystem.Play();
 
             return;
         }
 
         if (GameManager.Instance.GetBlackPowerUp() && enemyState == EnemyState.Normal)
         {
-            confusedParticleSystem.Play();
+            ConfusedParticleSystem.Play();
+            ConfusedHat.SetActive(true);
         }
         else if (!GameManager.Instance.GetBluePowerUp())
         {
-            confusedParticleSystem.Pause();
-            confusedParticleSystem.Clear();
+            ConfusedParticleSystem.Pause();
+            ConfusedParticleSystem.Clear();
+            ConfusedHat.SetActive(false);
         }
 
-        sleepParticleSystem.Pause();
-        sleepParticleSystem.Clear();
+        SleepParticleSystem.Pause();
+        SleepParticleSystem.Clear();
 
 
         Animator.speed = 1;

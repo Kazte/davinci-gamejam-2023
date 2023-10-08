@@ -81,6 +81,7 @@ public class GameManager : Singleton<GameManager>
         currentEnemies++;
         MaxEnemies++;
         HUDManager.Instance.SetEnemiesLeft(currentEnemies, MaxEnemies);
+        Debug.Log("added");
     }
 
     public void RemoveEnemy()

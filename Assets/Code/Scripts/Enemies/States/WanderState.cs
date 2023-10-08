@@ -22,6 +22,11 @@ public class WanderState : State
     {
         base.Update();
 
+        if (currentNode == null)
+        {
+            currentNode = NodeManager.Instance.GetClosestNode(Enemy.transform.position);
+        }
+
         if (Vector3.Distance(Enemy.transform.position, currentNode.transform.position) <= Enemy.ReachNodeDistance)
         {
             currentNode = NodeManager.Instance.GetRandomChildOfNode(currentNode);
@@ -32,14 +37,15 @@ public class WanderState : State
         {
             Enemy.ChangeState("run");
         }
-
-        
     }
 
     public override void FixedUpdate()
     {
         base.FixedUpdate();
 
+
+        if (currentNode == null)
+            return;
 
         Enemy.Rb.velocity = Vector3.zero;
 
