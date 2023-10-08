@@ -6,6 +6,9 @@ public class AmmoUI : MonoBehaviour
 {
     private Image image;
 
+    public Sprite FilledSprite;
+    public Sprite EmptySprite;
+
     private void Awake()
     {
         image = GetComponent<Image>();
@@ -13,11 +16,11 @@ public class AmmoUI : MonoBehaviour
 
     public void Fill()
     {
-        image.enabled = true;
+        image.sprite = FilledSprite;
     }
 
     public void Empty()
     {
-        image.enabled = false;
+        image.sprite = EmptySprite;
     }
 }

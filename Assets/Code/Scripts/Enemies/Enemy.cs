@@ -80,15 +80,17 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        if (Vector3.Distance(Target.position, transform.position) > UndetectionRadius)
+        var distance = Vector3.Distance(Target.position, transform.position);
+        if (distance > UndetectionRadius || GameManager.Instance.GetEnemiesLeft() < 5)
         {
             Rb.velocity = Vector3.zero;
             Velocity = Vector3.zero;
-            return;
+        }
+        else
+        {
+            currentStateMachine.Update();
         }
 
-
-        currentStateMachine.Update();
 
         if (CanDrop)
         {
@@ -111,10 +113,11 @@ public class Enemy : MonoBehaviour
         {
             Rb.velocity = Vector3.zero;
             Velocity = Vector3.zero;
-            return;
         }
-
-        currentStateMachine.FixedUpdate();
+        else
+        {
+            currentStateMachine.FixedUpdate();
+        }
     }
 
 

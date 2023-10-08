@@ -97,4 +97,6 @@ public class GameManager : Singleton<GameManager>
     }
 
     public bool GetBluePowerUp() => bluePowerUp;
+
+    public int GetEnemiesLeft() => currentEnemies;
 }

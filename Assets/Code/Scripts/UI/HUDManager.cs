@@ -9,7 +9,7 @@ using Utilities;
 public class HUDManager : Singleton<HUDManager>
 {
     [Header("Top Container")]
-    [Space] public Image GarbageSlider;
+    [Space] public Slider GarbageSlider;
 
     [Space] public TMP_Text TimerText;
 
@@ -26,14 +26,24 @@ public class HUDManager : Singleton<HUDManager>
     [Space] public Image GreenPowerUpSlider;
 
     public TMP_Text GreenPowerUpText;
+    public GameObject GreenPowerUpContainer;
 
     [Space] public Image BlackPowerUpSlider;
 
     public TMP_Text BlackPowerUpText;
+    public GameObject BlackPowerUpContainer;
 
     [Space] public Image BluePowerUpSlider;
 
     public TMP_Text BluePowerUpText;
+    public GameObject BluePowerUpContainer;
+
+    private void Start()
+    {
+        SetPowerUpGreen(0, 0);
+        SetPowerUpBlack(0, 0);
+        SetPowerUpBlue(0, 0);
+    }
 
 
     public void SetGarbageSlider(float percent)
@@ -51,7 +61,7 @@ public class HUDManager : Singleton<HUDManager>
 
     public void SetEnemiesLeft(int enemiesLeft, int maxEnemies)
     {
-        EnemiesLeftSlider.fillAmount = enemiesLeft / (float)maxEnemies;
+        EnemiesLeftSlider.fillAmount = 1 - (enemiesLeft / (float)maxEnemies);
         EnemiesLeftText.SetText(enemiesLeft.ToString());
     }
 
@@ -78,11 +88,13 @@ public class HUDManager : Singleton<HUDManager>
         {
             GreenPowerUpSlider.fillAmount = timeLeft / totalTime;
             GreenPowerUpText.SetText(timeLeft.ToString("0.00s"));
+            GreenPowerUpContainer.gameObject.SetActive(true);
         }
         else
         {
             GreenPowerUpText.SetText(string.Empty);
             GreenPowerUpSlider.fillAmount = 0;
+            GreenPowerUpContainer.gameObject.SetActive(false);
         }
     }
 
@@ -91,13 +103,15 @@ public class HUDManager : Singleton<HUDManager>
     {
         if (timeLeft > 0)
         {
-            BlackPowerUpSlider.fillAmount = 1f - timeLeft / totalTime;
+            BlackPowerUpSlider.fillAmount = timeLeft / totalTime;
             BlackPowerUpText.SetText(timeLeft.ToString());
+            BlackPowerUpContainer.gameObject.SetActive(true);
         }
         else
         {
             BlackPowerUpText.SetText(string.Empty);
             BlackPowerUpSlider.fillAmount = 0;
+            BlackPowerUpContainer.gameObject.SetActive(false);
         }
     }
 
@@ -105,13 +119,15 @@ public class HUDManager : Singleton<HUDManager>
     {
         if (timeLeft > 0)
         {
-            BluePowerUpSlider.fillAmount = 1f - timeLeft / totalTime;
+            BluePowerUpSlider.fillAmount = timeLeft / totalTime;
             BluePowerUpText.SetText(timeLeft.ToString());
+            BluePowerUpContainer.gameObject.SetActive(true);
         }
         else
         {
             BluePowerUpText.SetText(string.Empty);
             BluePowerUpSlider.fillAmount = 0;
+            BluePowerUpContainer.gameObject.SetActive(false);
         }
     }
 }

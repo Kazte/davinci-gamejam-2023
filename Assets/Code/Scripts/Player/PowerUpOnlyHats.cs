@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PowerUpNoShadow : MonoBehaviour, IPowerUp
+public class PowerUpOnlyHats : MonoBehaviour, IPowerUp
 {
     public float StartTime = 4f;
 
@@ -38,15 +38,16 @@ public class PowerUpNoShadow : MonoBehaviour, IPowerUp
             currentTime -= Time.deltaTime;
 
             //Actualizar Hud
-            HUDManager.Instance.SetPowerUpBlue(currentTime, StartTime);
+            HUDManager.Instance.SetPowerUpBlack(currentTime, StartTime);
         }
         else
         {
             if (isTimeRunning)
             {
                 DeactivatePowerUp(modifingCharacter);
-                HUDManager.Instance.SetPowerUpBlue(0, StartTime);
+                HUDManager.Instance.SetPowerUpBlack(0, StartTime);
             }
         }
+        
     }
 }
