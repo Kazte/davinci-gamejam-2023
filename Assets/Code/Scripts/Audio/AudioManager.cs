@@ -70,7 +70,14 @@ public class AudioManager : Singleton<AudioManager>
                 currentMusic = name;
             }
 
-            s.source.PlayOneShot(s.clip);
+            if (s.loop)
+            {
+                s.source.Play();
+            }
+            else
+            {
+                s.source.PlayOneShot(s.clip);
+            }
         }
     }
 
