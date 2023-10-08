@@ -15,18 +15,28 @@ public class HUDMenu : MonoBehaviour
 
     public GameObject creditsContainer;
 
+    private void Start()
+    {
+        AudioManager.Instance.Play("Menu_Music");
+    }
     private void Awake()
     {
-        StartButton.onClick.AddListener(() => { SceneManager.LoadScene(sceneBuildIndex: 1); });
+
+        StartButton.onClick.AddListener(() => {
+            AudioManager.Instance.Play("Button_Sound");
+            SceneManager.LoadScene(sceneBuildIndex: 1); 
+        });
 
         CreditsButton.onClick.AddListener(() =>
         {
+            AudioManager.Instance.Play("Button_Sound");
             creditsContainer.SetActive(true);
             EventSystem.current.SetSelectedGameObject(null);
         });
 
         CreditsBackButton.onClick.AddListener(() =>
         {
+            AudioManager.Instance.Play("Button_Sound");
             creditsContainer.SetActive(false);
             EventSystem.current.SetSelectedGameObject(null);
         });

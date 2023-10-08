@@ -134,6 +134,7 @@ public class Enemy : MonoBehaviour
     [ContextMenu("Convert to Zombie (Good)")]
     public void ConvertToZombie()
     {
+        AudioManager.Instance.Play("Transform_Npc");
         SpriteRenderer.color = goodColor;
         currentStateMachine = stateMachineZombie;
         GameManager.Instance.RemoveEnemy();
