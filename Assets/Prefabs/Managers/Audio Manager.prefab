@@ -127,3 +127,11 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 176367aaefa5d0743b1c5927338a95af, type: 3}
     source: {fileID: 0}
     type: 0
+  - name: No_Shoot
+    volume: 1
+    pitch: 1
+    playOnAwake: 0
+    loop: 0
+    clip: {fileID: 8300000, guid: f206010ab290b8e45b5aeed36f3aa3b7, type: 3}
+    source: {fileID: 0}
+    type: 0

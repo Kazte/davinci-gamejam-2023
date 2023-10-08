@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour
 {
     public SpriteRenderer SpriteRenderer;
     public Animator Animator;
+    public RuntimeAnimatorController[] Controllers;
     public Rigidbody Rb;
     public Transform Body;
 
@@ -66,6 +67,8 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
+        Animator.runtimeAnimatorController = Controllers[Random.Range(0, Controllers.Length)];
+
         Health = new Health(1);
 
         Health.Modified += HealthOnModified;
@@ -199,6 +202,8 @@ public class Enemy : MonoBehaviour
 
         Velocity = Vector3.zero;
         Rb.velocity = Vector3.zero;
+        ConfusedHat.SetActive(false);
+        ConfusedParticleSystem.Stop();
 
         yield return new WaitForSeconds(1f);
 

@@ -30,8 +30,14 @@ public class AmmoUI : MonoBehaviour
         image.sprite = EmptySprite;
     }
 
+    private bool playingFillEffect;
+
     public void PlayFillEffect()
     {
-        transform.DOPunchScale(Vector3.one * 0.5f, 0.25f);
+        if (!playingFillEffect)
+        {
+            playingFillEffect = true;
+            transform.DOPunchScale(Vector3.one * 0.5f, 0.25f).OnComplete(() => { playingFillEffect = false; });
+        }
     }
 }

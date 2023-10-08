@@ -70,7 +70,7 @@ public class AudioManager : Singleton<AudioManager>
                 currentMusic = name;
             }
 
-            s.source.Play();
+            s.source.PlayOneShot(s.clip);
         }
     }
 

@@ -360,6 +360,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpriteRenderer: {fileID: 8957901783009837624}
   Animator: {fileID: 8957901783009837626}
+  Controllers:
+  - {fileID: 9100000, guid: fccb69be05c17784ca3724048fd1a94b, type: 2}
+  - {fileID: 9100000, guid: bc6cc69e9031ea943bc63f31b0c9d242, type: 2}
   Rb: {fileID: 8957901783084710961}
   Body: {fileID: 107711371391917232}
   Target: {fileID: 0}

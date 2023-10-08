@@ -63,6 +63,7 @@ public class GameManager : Singleton<GameManager>
         HUDManager.Instance.SetGarbageSlider(currentGarbage / (float)MaxGarbage);
         if (currentGarbage >= MaxGarbage - (MaxGarbage * 20 / 100))
         {
+            
             if (!AudioManager.Instance.IsAudioPlaying("Alert_Loser"))
                 AudioManager.Instance.Play("Alert_Loser");
         }
@@ -70,7 +71,9 @@ public class GameManager : Singleton<GameManager>
         if (currentGarbage >= MaxGarbage)
         {
             AudioManager.Instance.Stop("Alert_Loser");
+            AudioManager.Instance.Stop("Game_Music");
             AudioManager.Instance.Play("Loser");
+            
 
             GameOverContainer.SetActive(true);
             IsPause = true;

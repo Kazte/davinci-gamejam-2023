@@ -18,6 +18,7 @@ public class HUDWin : MonoBehaviour
     {
         RestartButton.onClick.AddListener(() =>
         {
+            AudioManager.Instance.Play("Button_Sound");
             StartCoroutine(ChangeScene(() =>
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -28,6 +29,7 @@ public class HUDWin : MonoBehaviour
         QuitButton.onClick.AddListener(
             () =>
             {
+                AudioManager.Instance.Play("Button_Sound");
                 StartCoroutine(ChangeScene(() =>
                 {
                     SceneManager.LoadScene(0);

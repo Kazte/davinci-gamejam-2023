@@ -10,7 +10,7 @@ public class ShootingController : MonoBehaviour
     public int StartingAmmo = 5;
 
     public ParticleSystem eatParticleSystem;
-    
+
     private bool gorduraActivate = false;
     private int currentAmmo;
     private float lastShootTime;
@@ -29,6 +29,15 @@ public class ShootingController : MonoBehaviour
         if (GameManager.Instance.IsPause)
         {
             return;
+        }
+
+        if (Input.GetMouseButtonDown(0) && currentAmmo <= 0 && !gorduraActivate &&
+            (Time.time - lastShootTime) >= ShootCooldown)
+        {
+            lastShootTime = Time.time;
+            AudioManager.Instance.Play("No_Shoot");
+            this.gameObject.GetComponentInChildren<Animator>().SetTrigger("Shooting");
+            HUDManager.Instance.NoAmmo();
         }
 
         if (Input.GetMouseButtonDown(0) && (Time.time - lastShootTime) >= ShootCooldown &&

@@ -15,6 +15,7 @@ public class HUDGameOver : MonoBehaviour
     {
         RestartButton.onClick.AddListener(() =>
         {
+            AudioManager.Instance.Play("Button_Sound");
             StartCoroutine(ChangeScene(() =>
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -25,6 +26,7 @@ public class HUDGameOver : MonoBehaviour
         QuitButton.onClick.AddListener(
             () =>
             {
+                AudioManager.Instance.Play("Button_Sound");
                 StartCoroutine(ChangeScene(() =>
                 {
                     SceneManager.LoadScene(0);

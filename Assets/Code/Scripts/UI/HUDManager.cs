@@ -174,4 +174,12 @@ public class HUDManager : Singleton<HUDManager>
             BluePowerUpContainer.gameObject.SetActive(false);
         }
     }
+
+    public void NoAmmo()
+    {
+        foreach (var ammo in AmmoUis)
+        {
+            ammo.PlayFillEffect();
+        }
+    }
 }
