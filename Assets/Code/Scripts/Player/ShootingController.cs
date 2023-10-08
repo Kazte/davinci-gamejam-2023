@@ -39,6 +39,8 @@ public class ShootingController : MonoBehaviour
 
     void Shooting()
     {
+        AudioManager.Instance.Play("Player_Disparo");
+
         GameObject bullet = Instantiate(BulletPrefab, transform.position, Quaternion.identity);
 
         Rigidbody bulletRigidBody = bullet.GetComponent<Rigidbody>();
@@ -50,6 +52,7 @@ public class ShootingController : MonoBehaviour
     {
         if (other.CompareTag("Ammo"))
         {
+            AudioManager.Instance.Play("Take_Trash");
             ModifyAmmo(1);
             Destroy(other.gameObject); //Destroy CartuchoObject
 

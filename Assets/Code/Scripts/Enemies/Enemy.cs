@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
@@ -31,6 +33,14 @@ public class Enemy : MonoBehaviour
     public float RunSpeed = 6f;
     public float DetectionRadius = 4f;
     public float UndetectionRadius = 10f;
+
+    [Header("VFX")]
+    public ParticleSystem TranformParticle;
+
+    public ParticleSystem SleepParticleSystem;
+
+    public ParticleSystem ConfusedParticleSystem;
+    public GameObject ConfusedHat;
 
 
     [Header("Garbage Drop")]
@@ -68,14 +78,22 @@ public class Enemy : MonoBehaviour
 
         // State machine bueno :)
         stateMachineZombie.Add(new WanderCommonState(this, "wander"));
+    }
 
-
+    private void Start()
+    {
         currentStateMachine = stateMachine;
 
         timerDropCooldown = DropCooldown;
 
         // CanDrop = true;
         GameManager.Instance.AddEnemy();
+
+        SleepParticleSystem.Pause();
+        SleepParticleSystem.Clear();
+
+        ConfusedParticleSystem.Pause();
+        ConfusedParticleSystem.Clear();
     }
 
     [Header("Temp")]
@@ -83,14 +101,15 @@ public class Enemy : MonoBehaviour
 
     public Color badColor = Color.red;
 
+    private Vector3 lastDirection;
 
     private void Update()
     {
-        currentStateMachine.Update();
+        currentStateMachine?.Update();
 
 
         // Body.rotation = Quaternion.LookRotation(new Vector3(0f, 0f, Velocity.z));
-        Vector3 direction = -Velocity;
+        Vector3 direction = -lastDirection;
 
         // Ensure the object doesn't roll by setting its up direction to the world up
         Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
@@ -124,23 +143,57 @@ public class Enemy : MonoBehaviour
             Rb.velocity = Vector3.zero;
             Velocity = Vector3.zero;
             Animator.speed = 0;
+            SleepParticleSystem.Play();
 
             return;
         }
 
+        if (GameManager.Instance.GetBlackPowerUp() && enemyState == EnemyState.Normal)
+        {
+            ConfusedParticleSystem.Play();
+            ConfusedHat.SetActive(true);
+
+            ConfusedHat.transform.localScale = Vector3.zero;
+            ConfusedHat.transform.DOScale(Vector3.one, 0.1f);
+        }
+        else if (!GameManager.Instance.GetBluePowerUp())
+        {
+            ConfusedParticleSystem.Pause();
+            ConfusedParticleSystem.Clear();
+
+            ConfusedHat.transform.DOScale(Vector3.zero, 0.2f).OnComplete(() => { ConfusedHat.SetActive(false); });
+        }
+
+        SleepParticleSystem.Pause();
+        SleepParticleSystem.Clear();
+
+
         Animator.speed = 1;
-        currentStateMachine.FixedUpdate();
+        currentStateMachine?.FixedUpdate();
+        lastDirection = Velocity;
     }
 
 
     [ContextMenu("Convert to Zombie (Good)")]
-    public void ConvertToZombie()
+    public IEnumerator ConvertToZombie()
     {
+        AudioManager.Instance.Play("Transform_Npc");
         SpriteRenderer.color = goodColor;
-        currentStateMachine = stateMachineZombie;
+
         GameManager.Instance.RemoveEnemy();
         enemyState = EnemyState.Converted;
         CanDrop = false;
+        TranformParticle.Play();
+
+        currentStateMachine = null;
+
+        Velocity = Vector3.zero;
+        Rb.velocity = Vector3.zero;
+
+        yield return new WaitForSeconds(1f);
+
+        currentStateMachine = stateMachineZombie;
+
         stateMachineZombie.ChangeToState("wander");
     }
 
@@ -155,7 +208,7 @@ public class Enemy : MonoBehaviour
     {
         if (currentHealth <= 0 && enemyState == EnemyState.Normal)
         {
-            ConvertToZombie();
+            StartCoroutine(ConvertToZombie());
         }
     }
 

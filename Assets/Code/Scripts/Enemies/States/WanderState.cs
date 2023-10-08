@@ -22,6 +22,11 @@ public class WanderState : State
     {
         base.Update();
 
+        if (currentNode == null)
+        {
+            currentNode = NodeManager.Instance.GetClosestNode(Enemy.transform.position);
+        }
+
         if (Vector3.Distance(Enemy.transform.position, currentNode.transform.position) <= Enemy.ReachNodeDistance)
         {
             currentNode = NodeManager.Instance.GetRandomChildOfNode(currentNode);
@@ -39,17 +44,20 @@ public class WanderState : State
         base.FixedUpdate();
 
 
+        if (currentNode == null)
+            return;
+
         Enemy.Rb.velocity = Vector3.zero;
 
         Enemy.Velocity += SteeringBehaviour.Seek(Enemy.transform.position, currentNode.transform.position,
             Enemy.WanderSpeed, Enemy.RotationSpeed, Enemy.Velocity);
 
-        var collidersLength =
-            Physics.OverlapSphereNonAlloc(Enemy.transform.position, Enemy.ObstacleDetectionRadius, colliders,
+        var colliders =
+            Physics.OverlapSphere(Enemy.transform.position, Enemy.ObstacleDetectionRadius,
                 LayerMask.GetMask("Obstacle"));
 
 
-        if (collidersLength > 0)
+        if (colliders.Length > 0)
         {
             foreach (var collider in colliders)
             {
@@ -65,7 +73,7 @@ public class WanderState : State
                     Color.magenta);
 
                 Enemy.Velocity += SteeringBehaviour.Flee(Enemy.transform.position,
-                    end, Enemy.WanderSpeed * 3f, Enemy.RotationSpeed * 2f, Enemy.Velocity);
+                    end, Enemy.WanderSpeed * 5f, Enemy.RotationSpeed * 2f, Enemy.Velocity);
             }
         }
 

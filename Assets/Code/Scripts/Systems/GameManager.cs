@@ -22,6 +22,7 @@ public class GameManager : Singleton<GameManager>
 
     private float timer;
 
+    private bool greenPowerUp;
     private bool blackPowerUp;
     private bool bluePowerUp;
 
@@ -51,9 +52,14 @@ public class GameManager : Singleton<GameManager>
         currentGarbage++;
 
         HUDManager.Instance.SetGarbageSlider(currentGarbage / (float)MaxGarbage);
+        if (currentGarbage >= MaxGarbage - (MaxGarbage * 20 / 100))
+        {
+            AudioManager.Instance.Play("Alert_Loser");
+        }
 
         if (currentGarbage >= MaxGarbage)
         {
+            AudioManager.Instance.Play("Loser");
             GameOverContainer.SetActive(true);
         }
     }
@@ -75,6 +81,7 @@ public class GameManager : Singleton<GameManager>
         currentEnemies++;
         MaxEnemies++;
         HUDManager.Instance.SetEnemiesLeft(currentEnemies, MaxEnemies);
+        Debug.Log("added");
     }
 
     public void RemoveEnemy()
@@ -84,6 +91,7 @@ public class GameManager : Singleton<GameManager>
 
         if (currentEnemies <= 0)
         {
+            AudioManager.Instance.Play("Winner");
             WinContainer.SetActive(true);
         }
     }
@@ -92,6 +100,13 @@ public class GameManager : Singleton<GameManager>
     {
         GameOverContainer.SetActive(true);
     }
+
+    public void SetGreenPowerUp(bool set)
+    {
+        greenPowerUp = set;
+    }
+
+    public bool GetGreenPowerUp() => greenPowerUp;
 
     public void SetBlackPowerUp(bool set)
     {

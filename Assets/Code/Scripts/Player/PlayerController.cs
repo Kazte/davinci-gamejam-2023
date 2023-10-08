@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private ShootingController shootingController;
-    
+
 
     private void Awake()
     {
@@ -18,8 +18,11 @@ public class PlayerController : MonoBehaviour
     {
         if (other.TryGetComponent<IPowerUp>(out var powerUp))
         {
-            powerUp.ActivatePowerUp(this.gameObject);
-            this.gameObject.GetComponentInChildren<Animator>().SetTrigger("PowerUp");
+            AudioManager.Instance.Play("Take_PowerUp");
+            if (powerUp.ActivatePowerUp(this.gameObject))
+            {
+                this.gameObject.GetComponentInChildren<Animator>().SetTrigger("PowerUp");
+            }
         }
     }
 }

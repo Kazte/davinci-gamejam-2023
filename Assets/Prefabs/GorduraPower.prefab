@@ -132,6 +132,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartTime: 5
+  Cooldown: 10
+  SpriteRenderer: {fileID: 2875613451596929588}
 --- !u!54 &-1021300172032391311
 Rigidbody:
   m_ObjectHideFlags: 0
