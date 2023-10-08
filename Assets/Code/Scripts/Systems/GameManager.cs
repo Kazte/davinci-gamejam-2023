@@ -51,9 +51,13 @@ public class GameManager : Singleton<GameManager>
         currentGarbage++;
 
         HUDManager.Instance.SetGarbageSlider(currentGarbage / (float)MaxGarbage);
-
+        if (currentGarbage>=MaxGarbage-(MaxGarbage*20/100))
+        {
+            AudioManager.Instance.Play("Alert_Loser");
+        }
         if (currentGarbage >= MaxGarbage)
         {
+            AudioManager.Instance.Play("Loser");
             GameOverContainer.SetActive(true);
         }
     }
@@ -84,6 +88,7 @@ public class GameManager : Singleton<GameManager>
 
         if (currentEnemies <= 0)
         {
+            AudioManager.Instance.Play("Winner");
             WinContainer.SetActive(true);
         }
     }
