@@ -45,7 +45,7 @@ public class HUDManager : Singleton<HUDManager>
     {
         GarbageSliderImage.transform.DOKill();
     }
-    
+
     private void Start()
     {
         SetPowerUpGreen(0, 0);
@@ -91,13 +91,15 @@ public class HUDManager : Singleton<HUDManager>
         EnemiesLeftText.SetText(enemiesLeft.ToString());
     }
 
+    private bool fullAmmo = true;
+
     public void SetAmmo(int ammo)
     {
         for (var i = 0; i < AmmoUis.Count; i++)
         {
             var ammoUi = AmmoUis[i];
 
-            if (i == ammo - 1)
+            if (i == ammo - 1 && (!fullAmmo || ammo < 6))
             {
                 ammoUi.Fill();
                 ammoUi.PlayFillEffect();
@@ -111,6 +113,13 @@ public class HUDManager : Singleton<HUDManager>
                 ammoUi.Empty();
             }
         }
+
+        fullAmmo = ammo switch
+        {
+            6 => true,
+            < 6 => false,
+            _ => fullAmmo
+        };
     }
 
     public void SetPowerUpGreen(float timeLeft, float totalTime)

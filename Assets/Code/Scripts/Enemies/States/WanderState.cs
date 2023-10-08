@@ -44,12 +44,12 @@ public class WanderState : State
         Enemy.Velocity += SteeringBehaviour.Seek(Enemy.transform.position, currentNode.transform.position,
             Enemy.WanderSpeed, Enemy.RotationSpeed, Enemy.Velocity);
 
-        var collidersLength =
-            Physics.OverlapSphereNonAlloc(Enemy.transform.position, Enemy.ObstacleDetectionRadius, colliders,
+        var colliders =
+            Physics.OverlapSphere(Enemy.transform.position, Enemy.ObstacleDetectionRadius,
                 LayerMask.GetMask("Obstacle"));
 
 
-        if (collidersLength > 0)
+        if (colliders.Length > 0)
         {
             foreach (var collider in colliders)
             {

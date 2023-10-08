@@ -11,8 +11,13 @@ public class PowerUpOnlyHats : MonoBehaviour, IPowerUp
     private bool isTimeRunning = false;
     private GameObject modifingCharacter;
 
-    public void ActivatePowerUp(GameObject character)
+    public bool ActivatePowerUp(GameObject character)
     {
+        if (GameManager.Instance.GetBluePowerUp())
+        {
+            return false;
+        }
+
         if (modifingCharacter == null)
         {
             modifingCharacter = character;
@@ -21,6 +26,8 @@ public class PowerUpOnlyHats : MonoBehaviour, IPowerUp
         //character.GetComponent<SHADOW>.SetShadow(false);
         isTimeRunning = true;
         currentTime = StartTime;
+
+        return true;
     }
 
     public void DeactivatePowerUp(GameObject character)

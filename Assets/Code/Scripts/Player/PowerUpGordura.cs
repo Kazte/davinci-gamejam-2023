@@ -13,9 +13,14 @@ public class PowerUpGordura : MonoBehaviour, IPowerUp
     private bool isTimeRunning = false;
     private GameObject modifingCharacter;
 
-   
-    public void ActivatePowerUp(GameObject character)
+
+    public bool ActivatePowerUp(GameObject character)
     {
+        if (GameManager.Instance.GetBluePowerUp())
+        {
+            return false;
+        }
+
         if (modifingCharacter == null)
         {
             modifingCharacter = character;
@@ -24,7 +29,9 @@ public class PowerUpGordura : MonoBehaviour, IPowerUp
         character.GetComponent<ShootingController>().SetGordura(true);
         isTimeRunning = true;
         currentTime = StartTime;
-    } 
+
+        return true;
+    }
 
     public void DeactivatePowerUp(GameObject character)
     {

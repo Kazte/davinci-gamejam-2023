@@ -26,16 +26,18 @@ public class HUDWin : MonoBehaviour
         var lastHighscore = PlayerPrefs.GetFloat("highscore", 0);
         var currentScore = GameManager.Instance.GetScore();
 
-        if (currentScore > lastHighscore)
+        if (currentScore < lastHighscore)
         {
             // New highscore
             highScoreText.SetText(
-                $"Has logrado salvar a la ciudad en {FormatTime(currentScore)}\nES UN NUEVO RECORD!!");
+                $"Has logrado salvar a la ciudad en <color=#4EA64E>{FormatTime(currentScore)}</color>\n<color=#4EA64E>ES UN NUEVO RECORD!!</color>");
+
+            PlayerPrefs.SetFloat("highscore", currentScore);
         }
         else
         {
             highScoreText.SetText(
-                $"Has salvado a la ciudad en {FormatTime(currentScore)}\nTu mejor tiempo fue {FormatTime(lastHighscore)}");
+                $"Has salvado a la ciudad en <color=#4EA64E>{FormatTime(currentScore)}</color>\nTu mejor tiempo fue <color=#4EA64E>{FormatTime(lastHighscore)}</color>");
         }
     }
 

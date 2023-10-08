@@ -32,6 +32,9 @@ public class Enemy : MonoBehaviour
     public float DetectionRadius = 4f;
     public float UndetectionRadius = 10f;
 
+    [Header("VFX")]
+    public ParticleSystem sleepParticleSystem;
+
 
     [Header("Garbage Drop")]
     public float DropCooldown = 5f;
@@ -76,6 +79,9 @@ public class Enemy : MonoBehaviour
 
         // CanDrop = true;
         GameManager.Instance.AddEnemy();
+
+        sleepParticleSystem.Pause();
+        sleepParticleSystem.Clear();
     }
 
     [Header("Temp")]
@@ -83,6 +89,7 @@ public class Enemy : MonoBehaviour
 
     public Color badColor = Color.red;
 
+    private Vector3 lastDirection;
 
     private void Update()
     {
@@ -90,7 +97,7 @@ public class Enemy : MonoBehaviour
 
 
         // Body.rotation = Quaternion.LookRotation(new Vector3(0f, 0f, Velocity.z));
-        Vector3 direction = -Velocity;
+        Vector3 direction = -lastDirection;
 
         // Ensure the object doesn't roll by setting its up direction to the world up
         Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
@@ -124,12 +131,17 @@ public class Enemy : MonoBehaviour
             Rb.velocity = Vector3.zero;
             Velocity = Vector3.zero;
             Animator.speed = 0;
+            sleepParticleSystem.Play();
 
             return;
         }
 
+        sleepParticleSystem.Pause();
+        sleepParticleSystem.Clear();
+
         Animator.speed = 1;
         currentStateMachine.FixedUpdate();
+        lastDirection = Velocity;
     }
 
 

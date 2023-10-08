@@ -12,8 +12,13 @@ public class PowerUpBatman : MonoBehaviour, IPowerUp
     private GameObject modifingCharacter;
     private Color lastColor;
 
-    public void ActivatePowerUp(GameObject character)
+    public bool ActivatePowerUp(GameObject character)
     {
+        if (GameManager.Instance.GetBluePowerUp())
+        {
+            return false;
+        }
+
         //character.GetComponent.LIGHTOUT
         if (modifingCharacter == null)
         {
@@ -24,6 +29,8 @@ public class PowerUpBatman : MonoBehaviour, IPowerUp
         modifingCharacter.GetComponent<Light>().color = Color.grey;
         isTimeRunning = true;
         currentTime = StartTime;
+
+        return true;
     }
 
     public void DeactivatePowerUp(GameObject character)
