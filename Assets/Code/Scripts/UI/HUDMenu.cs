@@ -15,13 +15,9 @@ public class HUDMenu : MonoBehaviour
 
     public GameObject creditsContainer;
 
-    private void Start()
-    {
-        AudioManager.Instance.Play("Menu_Music");
-    }
     private void Awake()
     {
-
+        AudioManager.Instance.Play("Menu_Music");
         StartButton.onClick.AddListener(() => {
             AudioManager.Instance.Play("Button_Sound");
             SceneManager.LoadScene(sceneBuildIndex: 1); 
@@ -41,6 +37,9 @@ public class HUDMenu : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(null);
         });
 
-        ExitButton.onClick.AddListener(() => { Application.Quit(); });
+        ExitButton.onClick.AddListener(() => {
+            AudioManager.Instance.Play("Button_Sound");
+            Application.Quit(); 
+        });
     }
 }
