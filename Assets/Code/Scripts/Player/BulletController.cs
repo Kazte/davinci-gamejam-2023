@@ -11,6 +11,8 @@ public class BulletController : MonoBehaviour
     public Rigidbody Rb;
     public Transform Body;
 
+    public ParticleSystem bulletDestroyParticleSystem;
+
     void Start()
     {
         initialPosition = transform.position;
@@ -29,11 +31,13 @@ public class BulletController : MonoBehaviour
         if (distance >= maxDistance)
         {
             Destroy(gameObject);
+            Instantiate(bulletDestroyParticleSystem, transform.position, Quaternion.identity).Play();
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         Destroy(gameObject);
+        Instantiate(bulletDestroyParticleSystem, transform.position, Quaternion.identity).Play();
     }
 }

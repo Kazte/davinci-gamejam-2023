@@ -50,6 +50,7 @@ MonoBehaviour:
   maxDistance: 30
   Rb: {fileID: 664012774603904367}
   Body: {fileID: 7153983198934169669}
+  bulletDestroyParticleSystem: {fileID: 6747234513859144822, guid: 1f3fa478c836e944a80e53ecb86dbba5, type: 3}
 --- !u!54 &664012774603904367
 Rigidbody:
   m_ObjectHideFlags: 0

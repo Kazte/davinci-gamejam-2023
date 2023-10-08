@@ -18,9 +18,9 @@ public class PlayerController : MonoBehaviour
     {
         if (other.TryGetComponent<IPowerUp>(out var powerUp))
         {
-            AudioManager.Instance.Play("Take_PowerUp");
             if (powerUp.ActivatePowerUp(this.gameObject))
             {
+                AudioManager.Instance.Play("Take_PowerUp");
                 this.gameObject.GetComponentInChildren<Animator>().SetTrigger("PowerUp");
             }
         }

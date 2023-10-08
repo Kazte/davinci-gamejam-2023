@@ -39,7 +39,7 @@ public class PowerUpOnlyHats : MonoBehaviour, IPowerUp
     public void DeactivatePowerUp(GameObject character)
     {
         //character.GetComponent<SHADOW>.SetShadow(true);
-        isTimeRunning = true;
+        isTimeRunning = false;
         currentTime = 0;
     }
 

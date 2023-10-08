@@ -9,6 +9,8 @@ public class ShootingController : MonoBehaviour
     public float ShootCooldown = 0.20f;
     public int StartingAmmo = 5;
 
+    public ParticleSystem eatParticleSystem;
+    
     private bool gorduraActivate = false;
     private int currentAmmo;
     private float lastShootTime;
@@ -60,6 +62,8 @@ public class ShootingController : MonoBehaviour
             AudioManager.Instance.Play("Take_Trash");
             ModifyAmmo(1);
             Destroy(other.gameObject); //Destroy CartuchoObject
+
+            eatParticleSystem.Play();
 
             GameManager.Instance.RemoveGarbage();
         }
