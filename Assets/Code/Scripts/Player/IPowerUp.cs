@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IPowerUp
 {
-    public bool ActivatePowerUp(GameObject character);
+    public void ActivatePowerUp(GameObject character);
     public void DeactivatePowerUp(GameObject character);
 
 }
