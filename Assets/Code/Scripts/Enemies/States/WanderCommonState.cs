@@ -21,10 +21,13 @@ public class WanderCommonState : State
     {
         base.Update();
 
-        if (Vector3.Distance(Enemy.transform.position, currentNode.transform.position) <= 0.1f)
+        if (Vector3.Distance(Enemy.transform.position, currentNode.transform.position) <= 0.5f)
         {
             currentNode = NodeManager.Instance.GetRandomChildOfNode(currentNode);
         }
+
+        Debug.DrawLine(Enemy.transform.position, currentNode.transform.position,
+            Color.red);
     }
 
     public override void FixedUpdate()

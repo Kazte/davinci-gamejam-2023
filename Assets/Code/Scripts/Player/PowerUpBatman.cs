@@ -43,6 +43,7 @@ public class PowerUpBatman : MonoBehaviour, IPowerUp
 
             //Actualizar Hud
             HUDManager.Instance.SetPowerUpBlue(currentTime, StartTime);
+            GameManager.Instance.SetBluePowerUp(true);
         }
         else
         {
@@ -50,6 +51,7 @@ public class PowerUpBatman : MonoBehaviour, IPowerUp
             {
                 DeactivatePowerUp(modifingCharacter);
                 HUDManager.Instance.SetPowerUpBlue(0, StartTime);
+                GameManager.Instance.SetBluePowerUp(false);
             }
         }
     }

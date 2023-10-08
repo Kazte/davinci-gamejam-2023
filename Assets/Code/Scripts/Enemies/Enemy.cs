@@ -32,6 +32,9 @@ public class Enemy : MonoBehaviour
     [Header("Garbage Drop")]
     public float DropCooldown = 5f;
 
+    public float GarbageRadius = 15f;
+
+
     [Range(0f, 1f)] public float DropChance = 1f;
     public GameObject GarbagePrefab;
     public bool CanDrop;
@@ -53,22 +56,21 @@ public class Enemy : MonoBehaviour
 
         Health.Modified += HealthOnModified;
 
-        // State machine comun
+        // State machine malo >:(
         stateMachine.Add(new WanderState(this, "wander"));
         stateMachine.Add(new RunState(this, "run"));
 
         stateMachine.ChangeToState("wander");
 
-        // State machine comun
+        // State machine bueno :)
         stateMachineZombie.Add(new WanderCommonState(this, "wander"));
 
-        stateMachineZombie.ChangeToState("wander");
 
         currentStateMachine = stateMachine;
 
         timerDropCooldown = DropCooldown;
 
-        CanDrop = true;
+        // CanDrop = true;
         GameManager.Instance.AddEnemy();
     }
 
@@ -80,19 +82,11 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
+        currentStateMachine.Update();
+
+
         var distance = Vector3.Distance(Target.position, transform.position);
-        if (distance > UndetectionRadius || GameManager.Instance.GetEnemiesLeft() < 5)
-        {
-            Rb.velocity = Vector3.zero;
-            Velocity = Vector3.zero;
-        }
-        else
-        {
-            currentStateMachine.Update();
-        }
-
-
-        if (CanDrop)
+        if (CanDrop && distance < GarbageRadius && !GameManager.Instance.GetBluePowerUp())
         {
             if (timerDropCooldown <= 0)
             {
@@ -109,15 +103,15 @@ public class Enemy : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Vector3.Distance(Target.position, transform.position) > UndetectionRadius)
+        if (GameManager.Instance.GetBluePowerUp() && enemyState == EnemyState.Normal)
         {
             Rb.velocity = Vector3.zero;
             Velocity = Vector3.zero;
+            Debug.Log("asd");
+            return;
         }
-        else
-        {
-            currentStateMachine.FixedUpdate();
-        }
+
+        currentStateMachine.FixedUpdate();
     }
 
 
@@ -129,6 +123,7 @@ public class Enemy : MonoBehaviour
         GameManager.Instance.RemoveEnemy();
         enemyState = EnemyState.Converted;
         CanDrop = false;
+        stateMachineZombie.ChangeToState("wander");
     }
 
     [ContextMenu("Convert to Normal (Bad)")]

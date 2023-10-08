@@ -10,17 +10,17 @@ public class PowerUpOnlyHats : MonoBehaviour, IPowerUp
 
     private bool isTimeRunning = false;
     private GameObject modifingCharacter;
+
     public void ActivatePowerUp(GameObject character)
     {
         if (modifingCharacter == null)
         {
             modifingCharacter = character;
         }
+
         //character.GetComponent<SHADOW>.SetShadow(false);
         isTimeRunning = true;
         currentTime = StartTime;
-            
-
     }
 
     public void DeactivatePowerUp(GameObject character)
@@ -39,6 +39,7 @@ public class PowerUpOnlyHats : MonoBehaviour, IPowerUp
 
             //Actualizar Hud
             HUDManager.Instance.SetPowerUpBlack(currentTime, StartTime);
+            GameManager.Instance.SetBlackPowerUp(true);
         }
         else
         {
@@ -46,8 +47,8 @@ public class PowerUpOnlyHats : MonoBehaviour, IPowerUp
             {
                 DeactivatePowerUp(modifingCharacter);
                 HUDManager.Instance.SetPowerUpBlack(0, StartTime);
+                GameManager.Instance.SetBlackPowerUp(false);
             }
         }
-        
     }
 }

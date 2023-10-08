@@ -22,12 +22,13 @@ public class WanderState : State
     {
         base.Update();
 
-        if (Vector3.Distance(Enemy.transform.position, currentNode.transform.position) <= 0.25f)
+        if (Vector3.Distance(Enemy.transform.position, currentNode.transform.position) <= 0.5f)
         {
             currentNode = NodeManager.Instance.GetRandomChildOfNode(currentNode);
         }
 
-        if (Vector3.Distance(Enemy.transform.position, Enemy.Target.position) <= Enemy.DetectionRadius)
+        if (!GameManager.Instance.GetBlackPowerUp() &&
+            Vector3.Distance(Enemy.transform.position, Enemy.Target.position) <= Enemy.DetectionRadius)
         {
             Enemy.ChangeState("run");
         }
@@ -37,7 +38,6 @@ public class WanderState : State
     {
         base.FixedUpdate();
 
-        
 
         Enemy.Rb.velocity = Vector3.zero;
 
@@ -45,9 +45,8 @@ public class WanderState : State
             Enemy.WanderSpeed, Enemy.RotationSpeed, Enemy.Velocity);
 
         var collidersLength =
-            Physics.OverlapSphereNonAlloc(Enemy.transform.position, Enemy.ObstacleDetectionRadius, colliders, LayerMask.GetMask("Obstacle"));
-
-        Debug.Log(collidersLength);
+            Physics.OverlapSphereNonAlloc(Enemy.transform.position, Enemy.ObstacleDetectionRadius, colliders,
+                LayerMask.GetMask("Obstacle"));
 
 
         if (collidersLength > 0)

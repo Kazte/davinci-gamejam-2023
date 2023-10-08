@@ -48,7 +48,7 @@ public class HUDManager : Singleton<HUDManager>
 
     public void SetGarbageSlider(float percent)
     {
-        GarbageSlider.fillAmount = percent;
+        GarbageSlider.value = percent;
     }
 
     public void SetTimer(float durationInSeconds)

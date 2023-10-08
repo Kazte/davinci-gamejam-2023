@@ -35,9 +35,8 @@ public class RunState : State
             Enemy.Target.position, Enemy.RunSpeed, Enemy.RotationSpeed, Enemy.Velocity);
 
         var collidersLength =
-            Physics.OverlapSphereNonAlloc(Enemy.transform.position, Enemy.ObstacleDetectionRadius, colliders, LayerMask.GetMask("Obstacle"));
-
-        Debug.Log(collidersLength);
+            Physics.OverlapSphereNonAlloc(Enemy.transform.position, Enemy.ObstacleDetectionRadius, colliders,
+                LayerMask.GetMask("Obstacle"));
 
 
         if (collidersLength > 0)
