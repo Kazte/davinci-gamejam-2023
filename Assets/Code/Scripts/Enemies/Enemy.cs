@@ -123,10 +123,12 @@ public class Enemy : MonoBehaviour
         {
             Rb.velocity = Vector3.zero;
             Velocity = Vector3.zero;
-            Debug.Log("asd");
+            Animator.speed = 0;
+
             return;
         }
 
+        Animator.speed = 1;
         currentStateMachine.FixedUpdate();
     }
 

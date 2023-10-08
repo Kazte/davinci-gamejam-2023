@@ -8,6 +8,9 @@ public class BulletController : MonoBehaviour
     // Start is called before the first frame update
     public float maxDistance = 30f;
     private Vector3 initialPosition;
+    public Rigidbody Rb;
+    public Transform Body;
+
     void Start()
     {
         initialPosition = transform.position;
@@ -16,6 +19,12 @@ public class BulletController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Vector3 direction = -Rb.velocity;
+
+        Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
+
+        Body.rotation = Quaternion.Slerp(Body.rotation, rotation, 25f * Time.deltaTime);
+
         float distance = Vector3.Distance(initialPosition, transform.position);
         if (distance >= maxDistance)
         {
