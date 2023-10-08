@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6556869991115894502}
   - component: {fileID: 880456274383909065}
   - component: {fileID: 1128977268066388102}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: OnlyHatPower
   m_TagString: PowerUp
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7829350150041294810}
   - component: {fileID: 920151942965130147}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3364459489306442792}
   - component: {fileID: 3364459489306442795}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 4493086292627099146}
   - component: {fileID: 6391489410493446252}
   - component: {fileID: 750294750}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Garbage
   m_TagString: Ammo
   m_Icon: {fileID: 0}

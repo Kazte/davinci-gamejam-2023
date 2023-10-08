@@ -17,6 +17,9 @@ public class GameManager : Singleton<GameManager>
     [Header("Game over")]
     public GameObject GameOverContainer;
 
+    [Header("Win")]
+    public GameObject WinContainer;
+
     private float timer;
 
     private bool blackPowerUp;
@@ -33,6 +36,7 @@ public class GameManager : Singleton<GameManager>
         HUDManager.Instance.SetEnemiesLeft(currentEnemies, MaxEnemies);
 
         GameOverContainer.SetActive(false);
+        WinContainer.SetActive(false);
     }
 
     private void Update()
@@ -77,6 +81,11 @@ public class GameManager : Singleton<GameManager>
     {
         currentEnemies--;
         HUDManager.Instance.SetEnemiesLeft(currentEnemies, MaxEnemies);
+
+        if (currentEnemies <= 0)
+        {
+            WinContainer.SetActive(true);
+        }
     }
 
     public void GameOver()
@@ -99,4 +108,6 @@ public class GameManager : Singleton<GameManager>
     public bool GetBluePowerUp() => bluePowerUp;
 
     public int GetEnemiesLeft() => currentEnemies;
+
+    public float GetScore() => timer;
 }

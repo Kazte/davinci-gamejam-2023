@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5155005399246290509}
   - component: {fileID: 2875613451596929588}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 5994726784350435714}
   - component: {fileID: -1021300172032391311}
   - component: {fileID: 2816210137138452830}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GorduraPower
   m_TagString: PowerUp
   m_Icon: {fileID: 0}

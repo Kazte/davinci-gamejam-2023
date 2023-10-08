@@ -14,6 +14,6 @@ public class HUDGameOver : MonoBehaviour
     {
         RestartButton.onClick.AddListener(() => { SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); });
 
-        QuitButton.onClick.AddListener(Application.Quit);
+        QuitButton.onClick.AddListener(() => { SceneManager.LoadScene(0); });
     }
 }
