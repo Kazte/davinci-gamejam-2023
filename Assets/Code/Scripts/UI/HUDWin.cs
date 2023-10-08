@@ -23,7 +23,7 @@ public class HUDWin : MonoBehaviour
 
     private void OnEnable()
     {
-        var lastHighscore = PlayerPrefs.GetFloat("highscore", 0);
+        var lastHighscore = PlayerPrefs.GetFloat("highscore", float.PositiveInfinity);
         var currentScore = GameManager.Instance.GetScore();
 
         if (currentScore < lastHighscore)
@@ -37,7 +37,7 @@ public class HUDWin : MonoBehaviour
         else
         {
             highScoreText.SetText(
-                $"Has salvado a la ciudad en <color=#4EA64E>{FormatTime(currentScore)}</color>\nTu mejor tiempo fue <color=#4EA64E>{FormatTime(lastHighscore)}</color>");
+                $"Tiempo Actual: <color=#4EA64E>{FormatTime(currentScore)}</color>\nMejor tiempo: <color=#4EA64E>{FormatTime(lastHighscore)}</color>");
         }
     }
 
