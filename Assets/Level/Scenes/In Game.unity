@@ -3983,6 +3983,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GarbageSlider: {fileID: 2102793274}
+  GarbageSliderImage: {fileID: 488168433}
   TimerText: {fileID: 497602771}
   EnemiesLeftSlider: {fileID: 2075392476}
   EnemiesLeftText: {fileID: 1979982614}

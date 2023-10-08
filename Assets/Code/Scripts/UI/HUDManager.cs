@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -10,6 +11,8 @@ public class HUDManager : Singleton<HUDManager>
 {
     [Header("Top Container")]
     [Space] public Slider GarbageSlider;
+
+    public GameObject GarbageSliderImage;
 
     [Space] public TMP_Text TimerText;
 
@@ -38,6 +41,11 @@ public class HUDManager : Singleton<HUDManager>
     public TMP_Text BluePowerUpText;
     public GameObject BluePowerUpContainer;
 
+    private void OnDisable()
+    {
+        GarbageSliderImage.transform.DOKill();
+    }
+    
     private void Start()
     {
         SetPowerUpGreen(0, 0);
@@ -46,9 +54,27 @@ public class HUDManager : Singleton<HUDManager>
     }
 
 
+    private bool garbageImageTweening;
+
     public void SetGarbageSlider(float percent)
     {
         GarbageSlider.value = percent;
+
+        if (percent > 0.5f)
+        {
+            if (!garbageImageTweening)
+            {
+                if (GarbageSliderImage.transform != null)
+                    GarbageSliderImage.transform.DOScale(Vector3.one * 1.3f, 0.2f).SetLoops(-1, LoopType.Yoyo);
+                garbageImageTweening = true;
+            }
+        }
+        else
+        {
+            GarbageSliderImage.transform.DORestart();
+            GarbageSliderImage.transform.DOPause();
+            garbageImageTweening = false;
+        }
     }
 
     public void SetTimer(float durationInSeconds)
@@ -71,7 +97,12 @@ public class HUDManager : Singleton<HUDManager>
         {
             var ammoUi = AmmoUis[i];
 
-            if (i < ammo)
+            if (i == ammo - 1)
+            {
+                ammoUi.Fill();
+                ammoUi.PlayFillEffect();
+            }
+            else if (i < ammo)
             {
                 ammoUi.Fill();
             }
