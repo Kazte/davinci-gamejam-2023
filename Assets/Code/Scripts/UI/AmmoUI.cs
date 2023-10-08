@@ -32,6 +32,6 @@ public class AmmoUI : MonoBehaviour
 
     public void PlayFillEffect()
     {
-        transform.DOShakeScale(0.25f, Vector3.one * 0.25f, randomnessMode: ShakeRandomnessMode.Harmonic);
+        transform.DOPunchScale(Vector3.one * 0.5f, 0.25f);
     }
 }

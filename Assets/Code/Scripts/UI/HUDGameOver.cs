@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -9,14 +11,32 @@ public class HUDGameOver : MonoBehaviour
 
     public Button QuitButton;
 
-    private void Start()
-    {
-        AudioManager.Instance.Play("Game_Music");
-    }
     private void Awake()
     {
-        RestartButton.onClick.AddListener(() => { SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); });
+        RestartButton.onClick.AddListener(() =>
+        {
+            StartCoroutine(ChangeScene(() =>
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                return true;
+            }));
+        });
 
-        QuitButton.onClick.AddListener(() => { SceneManager.LoadScene(0); });
+        QuitButton.onClick.AddListener(
+            () =>
+            {
+                StartCoroutine(ChangeScene(() =>
+                {
+                    SceneManager.LoadScene(0);
+                    return true;
+                }));
+            });
+    }
+
+    private IEnumerator ChangeScene(Func<bool> callback)
+    {
+        yield return new WaitForSeconds(0.4f);
+
+        callback();
     }
 }

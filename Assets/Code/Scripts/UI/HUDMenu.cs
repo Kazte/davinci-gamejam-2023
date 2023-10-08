@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -18,9 +20,16 @@ public class HUDMenu : MonoBehaviour
     private void Awake()
     {
         AudioManager.Instance.Play("Menu_Music");
-        StartButton.onClick.AddListener(() => {
+        StartButton.onClick.AddListener(() =>
+        {
             AudioManager.Instance.Play("Button_Sound");
-            SceneManager.LoadScene(sceneBuildIndex: 1); 
+
+            StartCoroutine(ChangeScene(() =>
+            {
+                SceneManager.LoadScene(sceneBuildIndex: 1);
+
+                return true;
+            }));
         });
 
         CreditsButton.onClick.AddListener(() =>
@@ -37,9 +46,23 @@ public class HUDMenu : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(null);
         });
 
-        ExitButton.onClick.AddListener(() => {
+        ExitButton.onClick.AddListener(() =>
+        {
             AudioManager.Instance.Play("Button_Sound");
-            Application.Quit(); 
+
+            StartCoroutine(ChangeScene(() =>
+            {
+                Application.Quit();
+
+                return true;
+            }));
         });
+    }
+
+    private IEnumerator ChangeScene(Func<bool> callback)
+    {
+        yield return new WaitForSeconds(0.4f);
+
+        callback();
     }
 }

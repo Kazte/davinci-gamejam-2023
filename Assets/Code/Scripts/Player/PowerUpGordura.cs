@@ -13,19 +13,9 @@ public class PowerUpGordura : MonoBehaviour, IPowerUp
     private bool isTimeRunning = false;
     private GameObject modifingCharacter;
 
-    public float Cooldown = 10f;
-    private float currentCooldown;
-    private bool canTake;
-
-    public SpriteRenderer SpriteRenderer;
-
-    public bool ActivatePowerUp(GameObject character)
+   
+    public void ActivatePowerUp(GameObject character)
     {
-        if (GameManager.Instance.GetGreenPowerUp() || !canTake)
-        {
-            return false;
-        }
-
         if (modifingCharacter == null)
         {
             modifingCharacter = character;
@@ -34,18 +24,12 @@ public class PowerUpGordura : MonoBehaviour, IPowerUp
         character.GetComponent<ShootingController>().SetGordura(true);
         isTimeRunning = true;
         currentTime = StartTime;
-        GameManager.Instance.SetGreenPowerUp(true);
-
-        currentCooldown = Cooldown;
-
-        return true;
-    }
+    } 
 
     public void DeactivatePowerUp(GameObject character)
     {
         character.GetComponent<ShootingController>().SetGordura(false);
         isTimeRunning = false;
-        GameManager.Instance.SetGreenPowerUp(false);
         currentTime = 0;
     }
 
@@ -65,20 +49,6 @@ public class PowerUpGordura : MonoBehaviour, IPowerUp
                 DeactivatePowerUp(modifingCharacter);
                 HUDManager.Instance.SetPowerUpGreen(0, StartTime);
             }
-        }
-
-        if (currentCooldown > 0)
-        {
-            currentCooldown -= Time.deltaTime;
-            canTake = false;
-
-            SpriteRenderer.color = new Color(1, 1, 1, 0.25f);
-        }
-        else
-        {
-            currentCooldown = 0;
-            canTake = true;
-            SpriteRenderer.color = Color.white;
         }
     }
 }

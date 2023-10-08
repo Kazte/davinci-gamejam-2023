@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,29 +16,42 @@ public class HUDWin : MonoBehaviour
 
     private void Awake()
     {
-        RestartButton.onClick.AddListener(() => { SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); });
+        RestartButton.onClick.AddListener(() =>
+        {
+            StartCoroutine(ChangeScene(() =>
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                return true;
+            }));
+        });
 
-        QuitButton.onClick.AddListener(() => { SceneManager.LoadScene(0); });
+        QuitButton.onClick.AddListener(
+            () =>
+            {
+                StartCoroutine(ChangeScene(() =>
+                {
+                    SceneManager.LoadScene(0);
+                    return true;
+                }));
+            });
     }
 
 
     private void OnEnable()
     {
-        var lastHighscore = PlayerPrefs.GetFloat("highscore", float.PositiveInfinity);
+        var lastHighscore = PlayerPrefs.GetFloat("highscore", 0);
         var currentScore = GameManager.Instance.GetScore();
 
-        if (currentScore < lastHighscore)
+        if (currentScore > lastHighscore)
         {
             // New highscore
             highScoreText.SetText(
-                $"Has logrado salvar a la ciudad en <color=#4EA64E>{FormatTime(currentScore)}</color>\n<color=#4EA64E>ES UN NUEVO RECORD!!</color>");
-
-            PlayerPrefs.SetFloat("highscore", currentScore);
+                $"Has logrado salvar a la ciudad en {FormatTime(currentScore)}\nES UN NUEVO RECORD!!");
         }
         else
         {
             highScoreText.SetText(
-                $"Tiempo Actual: <color=#4EA64E>{FormatTime(currentScore)}</color>\nMejor tiempo: <color=#4EA64E>{FormatTime(lastHighscore)}</color>");
+                $"Has salvado a la ciudad en {FormatTime(currentScore)}\nTu mejor tiempo fue {FormatTime(lastHighscore)}");
         }
     }
 
@@ -47,5 +61,12 @@ public class HUDWin : MonoBehaviour
         var minutes = Mathf.FloorToInt(time / 60);
 
         return $"{minutes:00}:{seconds:00}";
+    }
+
+    private IEnumerator ChangeScene(Func<bool> callback)
+    {
+        yield return new WaitForSeconds(0.4f);
+
+        callback();
     }
 }
