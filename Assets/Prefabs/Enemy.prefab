@@ -380,7 +380,7 @@ MonoBehaviour:
   ConfusedHat: {fileID: 5599412848192978677}
   DropCooldown: 2
   GarbageRadius: 25
-  DropChance: 0.45
+  DropChance: 0.153
   GarbagePrefab: {fileID: 3364459489510278853, guid: cb7655d3544847047aa80f01a7d6c43e, type: 3}
   CanDrop: 0
   Velocity: {x: 0, y: 0, z: 0}
