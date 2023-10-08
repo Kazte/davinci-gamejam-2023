@@ -9,10 +9,7 @@ public class HUDGameOver : MonoBehaviour
 
     public Button QuitButton;
 
-    private void Start()
-    {
-        AudioManager.Instance.Play("Game_Music");
-    }
+
     private void Awake()
     {
         RestartButton.onClick.AddListener(() => { SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); });

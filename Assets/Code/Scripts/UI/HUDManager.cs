@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -11,8 +10,6 @@ public class HUDManager : Singleton<HUDManager>
 {
     [Header("Top Container")]
     [Space] public Slider GarbageSlider;
-
-    public GameObject GarbageSliderImage;
 
     [Space] public TMP_Text TimerText;
 
@@ -41,11 +38,6 @@ public class HUDManager : Singleton<HUDManager>
     public TMP_Text BluePowerUpText;
     public GameObject BluePowerUpContainer;
 
-    private void OnDisable()
-    {
-        GarbageSliderImage.transform.DOKill();
-    }
-
     private void Start()
     {
         SetPowerUpGreen(0, 0);
@@ -54,27 +46,9 @@ public class HUDManager : Singleton<HUDManager>
     }
 
 
-    private bool garbageImageTweening;
-
     public void SetGarbageSlider(float percent)
     {
         GarbageSlider.value = percent;
-
-        if (percent > 0.5f)
-        {
-            if (!garbageImageTweening)
-            {
-                if (GarbageSliderImage.transform != null)
-                    GarbageSliderImage.transform.DOScale(Vector3.one * 1.3f, 0.2f).SetLoops(-1, LoopType.Yoyo);
-                garbageImageTweening = true;
-            }
-        }
-        else
-        {
-            GarbageSliderImage.transform.DORestart();
-            GarbageSliderImage.transform.DOPause();
-            garbageImageTweening = false;
-        }
     }
 
     public void SetTimer(float durationInSeconds)
@@ -91,20 +65,13 @@ public class HUDManager : Singleton<HUDManager>
         EnemiesLeftText.SetText(enemiesLeft.ToString());
     }
 
-    private bool fullAmmo = true;
-
     public void SetAmmo(int ammo)
     {
         for (var i = 0; i < AmmoUis.Count; i++)
         {
             var ammoUi = AmmoUis[i];
 
-            if (i == ammo - 1 && (!fullAmmo || ammo < 6))
-            {
-                ammoUi.Fill();
-                ammoUi.PlayFillEffect();
-            }
-            else if (i < ammo)
+            if (i < ammo)
             {
                 ammoUi.Fill();
             }
@@ -113,13 +80,6 @@ public class HUDManager : Singleton<HUDManager>
                 ammoUi.Empty();
             }
         }
-
-        fullAmmo = ammo switch
-        {
-            6 => true,
-            < 6 => false,
-            _ => fullAmmo
-        };
     }
 
     public void SetPowerUpGreen(float timeLeft, float totalTime)

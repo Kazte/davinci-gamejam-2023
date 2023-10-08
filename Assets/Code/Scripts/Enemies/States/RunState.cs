@@ -34,12 +34,12 @@ public class RunState : State
         Enemy.Velocity += SteeringBehaviour.Flee(Enemy.transform.position,
             Enemy.Target.position, Enemy.RunSpeed, Enemy.RotationSpeed, Enemy.Velocity);
 
-        var colliders =
-            Physics.OverlapSphere(Enemy.transform.position, Enemy.ObstacleDetectionRadius,
+        var collidersLength =
+            Physics.OverlapSphereNonAlloc(Enemy.transform.position, Enemy.ObstacleDetectionRadius, colliders,
                 LayerMask.GetMask("Obstacle"));
 
 
-        if (colliders.Length > 0)
+        if (collidersLength > 0)
         {
             foreach (var collider in colliders)
             {
@@ -55,7 +55,7 @@ public class RunState : State
                     Color.magenta);
 
                 Enemy.Velocity += SteeringBehaviour.Flee(Enemy.transform.position,
-                    end, Enemy.WanderSpeed * 3f, Enemy.RotationSpeed * 2f, Enemy.Velocity);
+                    end, Enemy.WanderSpeed * 1.5f, Enemy.RotationSpeed, Enemy.Velocity);
             }
         }
 

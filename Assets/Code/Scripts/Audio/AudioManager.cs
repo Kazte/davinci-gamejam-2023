@@ -13,8 +13,7 @@ public class AudioManager : Singleton<AudioManager>
 {
     [SerializeField] AudioMixerGroup _musicMixerGroup;
     [SerializeField] AudioMixerGroup _soundMixerGroup;
-    [SerializeField] Sound[] _sounds=new Sound[0];
-
+    [SerializeField] Sound[] _sounds;
 
     string currentMusic = "";
 

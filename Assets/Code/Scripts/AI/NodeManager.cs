@@ -7,7 +7,11 @@ public class NodeManager : Singleton<NodeManager>
 {
     private List<NodeAI> nodes = new List<NodeAI>();
 
-    private void Start()
+#if UNITY_EDITOR
+
+
+    [ContextMenu("Validate")]
+    private void OnValidate()
     {
         nodes.Clear();
 
@@ -15,12 +19,11 @@ public class NodeManager : Singleton<NodeManager>
 
         nodes = nodesFounded;
     }
+#endif
 
     public NodeAI GetClosestNode(Vector3 position)
     {
-        var closestNode = nodes.OrderBy(x => Vector3.Distance(position, x.transform.position)).FirstOrDefault();
-
-       return closestNode;
+        return nodes.OrderBy(x => Vector3.Distance(position, x.transform.position)).First();
     }
 
     public NodeAI GetRandomChildOfNode(NodeAI currentNode)
