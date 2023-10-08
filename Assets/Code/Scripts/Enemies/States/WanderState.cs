@@ -22,7 +22,7 @@ public class WanderState : State
     {
         base.Update();
 
-        if (Vector3.Distance(Enemy.transform.position, currentNode.transform.position) <= 0.5f)
+        if (Vector3.Distance(Enemy.transform.position, currentNode.transform.position) <= Enemy.ReachNodeDistance)
         {
             currentNode = NodeManager.Instance.GetRandomChildOfNode(currentNode);
         }

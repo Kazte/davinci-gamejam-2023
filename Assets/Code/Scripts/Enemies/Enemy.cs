@@ -25,11 +25,13 @@ public class Enemy : MonoBehaviour
     public int MaxHealth = 1;
 
     public float RotationSpeed = 0.5f;
-    public float ObstacleDetectionRadius = 1.5f;
+    public float ReachNodeDistance = 0.6f;
     public float WanderSpeed = 4f;
+    public float ObstacleDetectionRadius = 1.5f;
     public float RunSpeed = 6f;
     public float DetectionRadius = 4f;
     public float UndetectionRadius = 10f;
+
 
     [Header("Garbage Drop")]
     public float DropCooldown = 5f;
