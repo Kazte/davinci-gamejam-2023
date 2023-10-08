@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
         if (other.TryGetComponent<IPowerUp>(out var powerUp))
         {
             powerUp.ActivatePowerUp(this.gameObject);
+            this.gameObject.GetComponentInChildren<Animator>().SetTrigger("PowerUp");
         }
     }
 }

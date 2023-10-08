@@ -27,8 +27,15 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        transform.Translate(movement * (MoveSpeed * Time.deltaTime),Space.World);  //Copy the vector3 movement to object
-
+        if (movement.x != 0 || movement.z != 0)
+        {
+            transform.Translate(movement * (MoveSpeed * Time.deltaTime), Space.World);  //Copy the vector3 movement to object
+            this.gameObject.GetComponentInChildren<Animator>().SetBool("Walking", true);
+        }
+        else 
+        {
+            this.gameObject.GetComponentInChildren<Animator>().SetBool("Walking", false);
+        }
         FaceCursor();
     }
     

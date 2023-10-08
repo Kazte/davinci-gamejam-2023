@@ -29,6 +29,7 @@ public class ShootingController : MonoBehaviour
         {
             Shooting();
             lastShootTime = Time.time;
+            this.gameObject.GetComponentInChildren<Animator>().SetTrigger("Shooting");
             if (gorduraActivate == false)
             {
                 ModifyAmmo(-1);
