@@ -28,6 +28,8 @@ public class HUDManager : Singleton<HUDManager>
     [Header("Power Up")]
     [Space] public Image GreenPowerUpSlider;
 
+    public Image GreenEffect;
+
     public TMP_Text GreenPowerUpText;
     public GameObject GreenPowerUpContainer;
 
@@ -129,12 +131,14 @@ public class HUDManager : Singleton<HUDManager>
             GreenPowerUpSlider.fillAmount = timeLeft / totalTime;
             GreenPowerUpText.SetText(timeLeft.ToString("0.00s"));
             GreenPowerUpContainer.gameObject.SetActive(true);
+            GreenEffect.gameObject.SetActive(true);
         }
         else
         {
             GreenPowerUpText.SetText(string.Empty);
             GreenPowerUpSlider.fillAmount = 0;
             GreenPowerUpContainer.gameObject.SetActive(false);
+            GreenEffect.gameObject.SetActive(false);
         }
     }
 

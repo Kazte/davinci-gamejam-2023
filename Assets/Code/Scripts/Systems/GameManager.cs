@@ -24,6 +24,8 @@ public class GameManager : Singleton<GameManager>
 
     private float timer;
 
+    
+    
     private bool greenPowerUp;
     private bool blackPowerUp;
     private bool bluePowerUp;
@@ -50,6 +52,8 @@ public class GameManager : Singleton<GameManager>
         timer += Time.deltaTime;
 
         HUDManager.Instance.SetTimer(timer);
+        
+        
     }
 
     public void AddGarbage()
@@ -114,6 +118,8 @@ public class GameManager : Singleton<GameManager>
     public void SetGreenPowerUp(bool set)
     {
         greenPowerUp = set;
+        
+        
     }
 
     public bool GetGreenPowerUp() => greenPowerUp;
