@@ -20,6 +20,8 @@ public class GameManager : Singleton<GameManager>
     [Header("Win")]
     public GameObject WinContainer;
 
+    public bool IsPause;
+
     private float timer;
 
     private bool greenPowerUp;
@@ -38,6 +40,9 @@ public class GameManager : Singleton<GameManager>
 
         GameOverContainer.SetActive(false);
         WinContainer.SetActive(false);
+
+        AudioManager.Instance.Play("Game_Music");
+        IsPause = false;
     }
 
     private void Update()
@@ -54,13 +59,17 @@ public class GameManager : Singleton<GameManager>
         HUDManager.Instance.SetGarbageSlider(currentGarbage / (float)MaxGarbage);
         if (currentGarbage >= MaxGarbage - (MaxGarbage * 20 / 100))
         {
-            AudioManager.Instance.Play("Alert_Loser");
+            if (!AudioManager.Instance.IsAudioPlaying("Alert_Loser"))
+                AudioManager.Instance.Play("Alert_Loser");
         }
 
         if (currentGarbage >= MaxGarbage)
         {
+            AudioManager.Instance.Stop("Alert_Loser");
             AudioManager.Instance.Play("Loser");
+
             GameOverContainer.SetActive(true);
+            IsPause = true;
         }
     }
 
@@ -81,7 +90,6 @@ public class GameManager : Singleton<GameManager>
         currentEnemies++;
         MaxEnemies++;
         HUDManager.Instance.SetEnemiesLeft(currentEnemies, MaxEnemies);
-        Debug.Log("added");
     }
 
     public void RemoveEnemy()
@@ -92,7 +100,9 @@ public class GameManager : Singleton<GameManager>
         if (currentEnemies <= 0)
         {
             AudioManager.Instance.Play("Winner");
+
             WinContainer.SetActive(true);
+            IsPause = true;
         }
     }
 

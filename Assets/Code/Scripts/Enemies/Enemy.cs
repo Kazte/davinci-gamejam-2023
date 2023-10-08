@@ -105,6 +105,11 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.IsPause)
+        {
+            return;
+        }
+
         currentStateMachine?.Update();
 
 
@@ -138,6 +143,11 @@ public class Enemy : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (GameManager.Instance.IsPause)
+        {
+            return;
+        }
+
         if (GameManager.Instance.GetBluePowerUp() && enemyState == EnemyState.Normal)
         {
             Rb.velocity = Vector3.zero;

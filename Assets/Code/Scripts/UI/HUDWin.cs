@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,9 +16,24 @@ public class HUDWin : MonoBehaviour
 
     private void Awake()
     {
-        RestartButton.onClick.AddListener(() => { SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); });
+        RestartButton.onClick.AddListener(() =>
+        {
+            StartCoroutine(ChangeScene(() =>
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                return true;
+            }));
+        });
 
-        QuitButton.onClick.AddListener(() => { SceneManager.LoadScene(0); });
+        QuitButton.onClick.AddListener(
+            () =>
+            {
+                StartCoroutine(ChangeScene(() =>
+                {
+                    SceneManager.LoadScene(0);
+                    return true;
+                }));
+            });
     }
 
 
@@ -47,5 +63,12 @@ public class HUDWin : MonoBehaviour
         var minutes = Mathf.FloorToInt(time / 60);
 
         return $"{minutes:00}:{seconds:00}";
+    }
+
+    private IEnumerator ChangeScene(Func<bool> callback)
+    {
+        yield return new WaitForSeconds(0.4f);
+
+        callback();
     }
 }

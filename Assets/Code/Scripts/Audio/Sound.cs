@@ -6,8 +6,8 @@ public class Sound
     [Header("Basic")]
     public string name;
 
-    [Range(0, 1)] public float volume;
-    [Range(-3, 3)] public float pitch;
+    [Range(0, 1)] public float volume = 1f;
+    [Range(-3, 3)] public float pitch = 1f;
     public bool playOnAwake;
     public bool loop;
 

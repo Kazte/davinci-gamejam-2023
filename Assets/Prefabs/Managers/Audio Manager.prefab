@@ -1,0 +1,129 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4293666411630642985
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4293666411630642984}
+  - component: {fileID: 4293666411630642991}
+  m_Layer: 0
+  m_Name: Audio Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4293666411630642984
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4293666411630642985}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4293666411630642991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4293666411630642985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c4b781dd81e4764bb414916639d18fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _musicMixerGroup: {fileID: -1002520560359551047, guid: e42273ab5944fd748955fa17c58f05d8, type: 2}
+  _soundMixerGroup: {fileID: 7415644839269495358, guid: e42273ab5944fd748955fa17c58f05d8, type: 2}
+  _sounds:
+  - name: Game_Music
+    volume: 0.25
+    pitch: 1
+    playOnAwake: 1
+    loop: 1
+    clip: {fileID: 8300000, guid: ecfe723499018a0489b9f0887d2d4b2a, type: 3}
+    source: {fileID: 0}
+    type: 1
+  - name: Player_Disparo
+    volume: 1
+    pitch: 1
+    playOnAwake: 0
+    loop: 0
+    clip: {fileID: 8300000, guid: b38b131fceb3e734a953fca3f847ae46, type: 3}
+    source: {fileID: 0}
+    type: 0
+  - name: Take_PowerUp
+    volume: 1
+    pitch: 1
+    playOnAwake: 0
+    loop: 0
+    clip: {fileID: 8300000, guid: c5de5eb171bb98e4fa292150ef6007f1, type: 3}
+    source: {fileID: 0}
+    type: 0
+  - name: Take_Trash
+    volume: 1
+    pitch: 1
+    playOnAwake: 0
+    loop: 0
+    clip: {fileID: 8300000, guid: 9a1d896646f4f0849b759a88aafc436f, type: 3}
+    source: {fileID: 0}
+    type: 0
+  - name: Transform_Npc
+    volume: 1
+    pitch: 1
+    playOnAwake: 0
+    loop: 0
+    clip: {fileID: 8300000, guid: e95688fe0dd0f2741ba43a4c09d9c70c, type: 3}
+    source: {fileID: 0}
+    type: 0
+  - name: Alert_Loser
+    volume: 1
+    pitch: 1
+    playOnAwake: 0
+    loop: 0
+    clip: {fileID: 8300000, guid: 8eebd783ad1ef3644977a90ca4f179de, type: 3}
+    source: {fileID: 0}
+    type: 0
+  - name: Winner
+    volume: 1
+    pitch: 1
+    playOnAwake: 0
+    loop: 0
+    clip: {fileID: 8300000, guid: 5e5ffb5da37281f41a0ab67749223be9, type: 3}
+    source: {fileID: 0}
+    type: 0
+  - name: Loser
+    volume: 1
+    pitch: 1
+    playOnAwake: 0
+    loop: 0
+    clip: {fileID: 8300000, guid: 90a46e5e10353f14ab62ed5df842543b, type: 3}
+    source: {fileID: 0}
+    type: 0
+  - name: Menu_Music
+    volume: 0.25
+    pitch: 1
+    playOnAwake: 0
+    loop: 1
+    clip: {fileID: 8300000, guid: ef82e23075cf25448af4fc63d85126ea, type: 3}
+    source: {fileID: 0}
+    type: 1
+  - name: Button_Sound
+    volume: 1
+    pitch: 1
+    playOnAwake: 0
+    loop: 0
+    clip: {fileID: 8300000, guid: 176367aaefa5d0743b1c5927338a95af, type: 3}
+    source: {fileID: 0}
+    type: 0

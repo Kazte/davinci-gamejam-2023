@@ -24,6 +24,11 @@ public class ShootingController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.Instance.IsPause)
+        {
+            return;
+        }
+
         if (Input.GetMouseButtonDown(0) && (Time.time - lastShootTime) >= ShootCooldown &&
             (currentAmmo > 0 || gorduraActivate))
         {
