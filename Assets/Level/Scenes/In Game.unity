@@ -3511,7 +3511,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba031493f25f4181890da2bae3af693f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxGarbage: 20
+  MaxGarbage: 35
   MaxEnemies: 0
   GameOverContainer: {fileID: 1266561469}
   WinContainer: {fileID: 1043716133}
