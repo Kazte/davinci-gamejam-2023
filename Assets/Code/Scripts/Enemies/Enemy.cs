@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public enum EnemyState
 {
@@ -90,8 +91,12 @@ public class Enemy : MonoBehaviour
         {
             if (timerDropCooldown <= 0)
             {
-                Instantiate(GarbagePrefab, transform.position, Quaternion.identity);
-                GameManager.Instance.AddGarbage();
+                if (Random.value > DropChance)
+                {
+                    Instantiate(GarbagePrefab, transform.position, Quaternion.identity);
+                    GameManager.Instance.AddGarbage();
+                }
+
                 timerDropCooldown = DropCooldown;
             }
             else
@@ -160,6 +165,9 @@ public class Enemy : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, UndetectionRadius);
         Gizmos.color = Color.white;
         Gizmos.DrawWireSphere(transform.position, ObstacleDetectionRadius);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, GarbageRadius);
+        Gizmos.color = Color.white;
     }
 
     public void ChangeState(string newState)

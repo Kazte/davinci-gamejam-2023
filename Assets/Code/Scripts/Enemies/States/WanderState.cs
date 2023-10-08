@@ -65,7 +65,7 @@ public class WanderState : State
                     Color.magenta);
 
                 Enemy.Velocity += SteeringBehaviour.Flee(Enemy.transform.position,
-                    end, Enemy.WanderSpeed * 1.5f, Enemy.RotationSpeed, Enemy.Velocity);
+                    end, Enemy.WanderSpeed * 1.5f, Enemy.RotationSpeed * 2f, Enemy.Velocity);
             }
         }
 
