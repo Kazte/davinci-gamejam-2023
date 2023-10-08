@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -34,6 +35,8 @@ public class Enemy : MonoBehaviour
     public float UndetectionRadius = 10f;
 
     [Header("VFX")]
+    public ParticleSystem TranformParticle;
+
     public ParticleSystem SleepParticleSystem;
 
     public ParticleSystem ConfusedParticleSystem;
@@ -102,7 +105,7 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        currentStateMachine.Update();
+        currentStateMachine?.Update();
 
 
         // Body.rotation = Quaternion.LookRotation(new Vector3(0f, 0f, Velocity.z));
@@ -166,20 +169,31 @@ public class Enemy : MonoBehaviour
 
 
         Animator.speed = 1;
-        currentStateMachine.FixedUpdate();
+        currentStateMachine?.FixedUpdate();
         lastDirection = Velocity;
     }
 
 
     [ContextMenu("Convert to Zombie (Good)")]
-    public void ConvertToZombie()
+    public IEnumerator ConvertToZombie()
     {
         AudioManager.Instance.Play("Transform_Npc");
         SpriteRenderer.color = goodColor;
-        currentStateMachine = stateMachineZombie;
+
         GameManager.Instance.RemoveEnemy();
         enemyState = EnemyState.Converted;
         CanDrop = false;
+        TranformParticle.Play();
+
+        currentStateMachine = null;
+
+        Velocity = Vector3.zero;
+        Rb.velocity = Vector3.zero;
+
+        yield return new WaitForSeconds(1f);
+
+        currentStateMachine = stateMachineZombie;
+
         stateMachineZombie.ChangeToState("wander");
     }
 
@@ -194,7 +208,7 @@ public class Enemy : MonoBehaviour
     {
         if (currentHealth <= 0 && enemyState == EnemyState.Normal)
         {
-            ConvertToZombie();
+            StartCoroutine(ConvertToZombie());
         }
     }
 
